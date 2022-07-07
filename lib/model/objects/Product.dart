@@ -1,18 +1,36 @@
+import 'ProductInPurchase.dart';
+import 'Review.dart';
+
 class Product {
   int id;
   String name;
+  String brand;
   String barCode;
   String description;
+  double price;
+  int quantity;
+  int productionYear;
+  bool freeShipping;
+  double score;
+  List<ProductInPurchase> productsInPurchase;
+  List<Review> reviews;
 
-
-  Product({this.id, this.name, this.barCode, this.description});
+  Product({this.id, this.name, this.brand, this.barCode, this.description, this.price, this.quantity,this.productionYear,this.freeShipping, this.score, this.productsInPurchase, this.reviews});
 
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
       id: json['id'],
       name: json['name'],
+      brand: json['brand'],
       barCode: json['barCode'],
       description: json['description'],
+      price: json['price'],
+      quantity: json['quantity'],
+      productionYear: json['productionYear'],
+      freeShipping: json['freeShipping'],
+      score: json['score'],
+      productsInPurchase: json['productsInPurchase'],
+      reviews: json['reviews']
     );
   }
 
@@ -21,12 +39,16 @@ class Product {
     'name': name,
     'barCode': barCode,
     'description': description,
+    'price': price,
+    'quantity': quantity,
+    'freeShipping': freeShipping,
+    'score': score,
+    'productsInPurchase': productsInPurchase,
+    'reviews': reviews
   };
 
   @override
   String toString() {
     return name;
   }
-
-
-}
+}//Product

@@ -1,3 +1,7 @@
+import 'Purchase.dart';
+import 'CreditCard.dart';
+import 'Review.dart';
+
 class User {
   int id;
   String code;
@@ -6,9 +10,14 @@ class User {
   String telephoneNumber;
   String email;
   String address;
+  DateTime birthDate;
+  DateTime registrationDate;
+  List<Purchase> purchases;
+  List<Review> reviews;
+  List<CreditCard> creditCards;
 
-
-  User({this.id, this.code, this.firstName, this.lastName, this.telephoneNumber, this.email, this.address});
+  User({this.id, this.code, this.firstName, this.lastName, this.telephoneNumber, this.email, this.address, this.birthDate, this.registrationDate, this.purchases,
+        this.reviews, this.creditCards});
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
@@ -19,6 +28,11 @@ class User {
       telephoneNumber: json['telephoneNumber'],
       email: json['email'],
       address: json['address'],
+      birthDate: json['birthDate'],
+      registrationDate: json['registrationDate'],
+      purchases: json['purchases'],
+      reviews:json['reviews'],
+      creditCards: json['creditCards']
     );
   }
 
@@ -30,6 +44,11 @@ class User {
     'telephoneNumber': telephoneNumber,
     'email': email,
     'address': address,
+    'birthDate' : birthDate,
+    'registrationDate': registrationDate,
+    'purchases': purchases,
+    'reviews': reviews,
+    'creditCards': creditCards
   };
 
   @override
