@@ -1,12 +1,12 @@
-import 'package:ecommerce/model/objects/Product.dart';
+import 'package:ecommerce/model/objects/Purchase.dart';
 import 'package:flutter/material.dart';
 
 
-class ProductCard extends StatelessWidget {
-  final Product product;
+class PurchaseCard extends StatelessWidget {
+  final Purchase purchase;
 
 
-  ProductCard({Key key, this.product}) : super(key: key);
+  PurchaseCard({Key key, this.purchase}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,28 +19,30 @@ class ProductCard extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              product.name,
+              purchase.id.toString(),
               style: TextStyle(
                 fontSize: 40,
                 color: Theme.of(context).primaryColor,
-                fontStyle: FontStyle.italic,
               ),
+              textAlign: TextAlign.left,
             ),
             Text(
-                    product.price.toString(),
-                    style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                    )
-                  ),
+                purchase.purchaseTime.toString(),
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                ),
+              textAlign: TextAlign.left,
+            ),
             Text(
-              product.description,
+              purchase.total.toString(),
               style: TextStyle(
                 color: Theme.of(context).primaryColor,
               ),
+              textAlign: TextAlign.left,
             ),
           ],
         ),
       ),
     );
   }
-}//ProductCard
+}//PurchaseCard
