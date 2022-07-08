@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:ecommerce/model/managers/RestManager.dart';
 import 'package:ecommerce/model/objects/AuthenticationData.dart';
 import 'package:ecommerce/model/objects/Product.dart';
+import 'package:ecommerce/model/objects/Promo.dart';
 import 'package:ecommerce/model/objects/User.dart';
 import 'package:ecommerce/model/support/Constants.dart';
 import 'package:ecommerce/model/support/LogInResult.dart';
@@ -90,6 +91,14 @@ class Model {
     }
     catch (e) {
       return null; // not the best solution
+    }
+  }
+
+  Future<List<Promo>> showPromos() async{
+    try{
+      return List<Promo>.from(json.decode(await _restManager.makeGetRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_PROMOS)).map((i) => Promo.fromJson(i)).toList());
+    }catch(e){
+      return null;
     }
   }
 

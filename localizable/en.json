@@ -10,5 +10,7 @@
   "email": "email",
   "address": "address",
   "just_added": "just added",
-  "no_results": "no results"
+  "no_results": "no results",
+  "promos" : "promos",
+  "purchases": "purchases"
 }

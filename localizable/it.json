@@ -10,5 +10,8 @@
   "email": "email",
   "address": "indirizzo",
   "just_added": "appena aggiunto",
-  "no_results": "nessun risultato"
+  "no_results": "nessun risultato",
+  "promos": "promozioni",
+  "modify": "modifica",
+  "purchases": "acquisti"
 }

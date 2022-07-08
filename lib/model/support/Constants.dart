@@ -5,11 +5,11 @@ class Constants {
 
   // addresses
   static final String ADDRESS_STORE_SERVER = "localhost:8080";
-  static final String ADDRESS_AUTHENTICATION_SERVER = "***";
+  static final String ADDRESS_AUTHENTICATION_SERVER = "localhost:8080";
 
   // authentication
-  static final String REALM = "***";
-  static final String CLIENT_ID = "***";
+  static final String REALM = "store";
+  static final String CLIENT_ID = "store-flutter";
   static final String CLIENT_SECRET = "***";
   static final String REQUEST_LOGIN = "/auth/realms/" + REALM + "/protocol/openid-connect/token";
   static final String REQUEST_LOGOUT = "/auth/realms/" + REALM + "/protocol/openid-connect/logout";
@@ -17,6 +17,7 @@ class Constants {
   // requests
   static final String REQUEST_SEARCH_PRODUCTS = "/products/search/by_name";
   static final String REQUEST_ADD_USER = "/users";
+  static final String REQUEST_PROMOS = "/promos";
 
   // states
   static final String STATE_CLUB = "club";

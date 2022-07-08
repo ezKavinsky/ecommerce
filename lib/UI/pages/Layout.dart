@@ -2,6 +2,7 @@ import 'package:ecommerce/model/support/extensions/StringCapitalization.dart';
 import 'package:ecommerce/UI/behaviors/AppLocalizations.dart';
 import 'package:ecommerce/UI/pages/Home.dart';
 import 'package:ecommerce/UI/pages/Search.dart';
+import 'package:ecommerce/UI/pages/Promoting.dart';
 import 'package:ecommerce/UI/pages/UserRegistration.dart';
 import 'package:flutter/material.dart';
 
