@@ -21,7 +21,6 @@ class Model {
       Map<String, String> params = Map();
       params["grant_type"] = "password";
       params["client_id"] = Constants.CLIENT_ID;
-      params["client_secret"] = Constants.CLIENT_SECRET;
       params["username"] = email;
       params["password"] = password;
       String result = await _restManager.makePostRequest(Constants.ADDRESS_AUTHENTICATION_SERVER, Constants.REQUEST_LOGIN, params, type: TypeHeader.urlencoded);
@@ -53,7 +52,6 @@ class Model {
       Map<String, String> params = Map();
       params["grant_type"] = "refresh_token";
       params["client_id"] = Constants.CLIENT_ID;
-      params["client_secret"] = Constants.CLIENT_SECRET;
       params["refresh_token"] = _authenticationData.refreshToken;
       String result = await _restManager.makePostRequest(Constants.ADDRESS_AUTHENTICATION_SERVER, Constants.REQUEST_LOGIN, params, type: TypeHeader.urlencoded);
       _authenticationData = AuthenticationData.fromJson(jsonDecode(result));
@@ -73,7 +71,6 @@ class Model {
       Map<String, String> params = Map();
       _restManager.token = null;
       params["client_id"] = Constants.CLIENT_ID;
-      params["client_secret"] = Constants.CLIENT_SECRET;
       params["refresh_token"] = _authenticationData.refreshToken;
       await _restManager.makePostRequest(Constants.ADDRESS_AUTHENTICATION_SERVER, Constants.REQUEST_LOGOUT, params, type: TypeHeader.urlencoded);
       return true;

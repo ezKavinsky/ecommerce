@@ -7,9 +7,9 @@ class Review {
   String comment;
   double stars;
   Product product;
-  User user;
+  User buyer;
 
-  Review({this.id, this.title, this.comment, this.stars, this.product, this.user});
+  Review({this.id, this.title, this.comment, this.stars, this.product, this.buyer});
 
   factory Review.fromJson(Map<String, dynamic> json) {
     return Review(
@@ -18,7 +18,7 @@ class Review {
         comment: json['comment'],
         stars: json['stars'],
         product: json['product'],
-        user: json['user']
+        buyer: json['buyer']
     );
   }
 
@@ -28,7 +28,7 @@ class Review {
     'comment': comment,
     'stars': stars,
     'product': product,
-    'user': user,
+    'buyer': buyer,
   };
 
   @override

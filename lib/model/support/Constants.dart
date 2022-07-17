@@ -4,15 +4,14 @@ class Constants {
   static final String APP_NAME = "SitoECommerce";
 
   // addresses
-  static final String ADDRESS_STORE_SERVER = "localhost:8080";
+  static final String ADDRESS_STORE_SERVER = "localhost:8081";
   static final String ADDRESS_AUTHENTICATION_SERVER = "localhost:8080";
 
   // authentication
   static final String REALM = "store";
   static final String CLIENT_ID = "store-flutter";
-  static final String CLIENT_SECRET = "***";
-  static final String REQUEST_LOGIN = "/auth/realms/" + REALM + "/protocol/openid-connect/token";
-  static final String REQUEST_LOGOUT = "/auth/realms/" + REALM + "/protocol/openid-connect/logout";
+  static final String REQUEST_LOGIN = "realms/" + REALM + "/protocol/openid-connect/token";
+  static final String REQUEST_LOGOUT = "realms/" + REALM + "/protocol/openid-connect/logout";
 
   // requests
   static final String REQUEST_SEARCH_PRODUCTS = "/products/search/by_name";

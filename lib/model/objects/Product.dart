@@ -1,3 +1,4 @@
+import 'ProductInCart.dart';
 import 'ProductInPurchase.dart';
 import 'Review.dart';
 
@@ -13,9 +14,10 @@ class Product {
   bool freeShipping;
   double score;
   List<ProductInPurchase> productsInPurchase;
+  List<ProductInCart> productsInCarts;
   List<Review> reviews;
 
-  Product({this.id, this.name, this.brand, this.barCode, this.description, this.price, this.quantity,this.productionYear,this.freeShipping, this.score, this.productsInPurchase, this.reviews});
+  Product({this.id, this.name, this.brand, this.barCode, this.description, this.price, this.quantity,this.productionYear,this.freeShipping, this.score, this.productsInPurchase, this.productsInCarts, this.reviews});
 
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
@@ -30,6 +32,7 @@ class Product {
       freeShipping: json['freeShipping'],
       score: json['score'],
       productsInPurchase: json['productsInPurchase'],
+      productsInCarts: json['productsInCarts'],
       reviews: json['reviews']
     );
   }
@@ -44,6 +47,7 @@ class Product {
     'freeShipping': freeShipping,
     'score': score,
     'productsInPurchase': productsInPurchase,
+    'productsInCarts': productsInCarts,
     'reviews': reviews
   };
 
@@ -51,4 +55,5 @@ class Product {
   String toString() {
     return name;
   }
+
 }//Product

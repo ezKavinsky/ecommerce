@@ -19,11 +19,13 @@ class _UserRegistrationState extends State<UserRegistration> {
   bool _adding = false;
   User _justAddedUser;
 
+  TextEditingController _codeFiledController = TextEditingController();
   TextEditingController _firstNameFiledController = TextEditingController();
   TextEditingController _lastNameFiledController = TextEditingController();
   TextEditingController _telephoneNumberFiledController = TextEditingController();
   TextEditingController _emailFiledController = TextEditingController();
   TextEditingController _addressFiledController = TextEditingController();
+  TextEditingController _birthDateFiledController = TextEditingController();
 
 
   @override
@@ -47,6 +49,10 @@ class _UserRegistrationState extends State<UserRegistration> {
               child: Column(
                 children: [
                   InputField(
+                    labelText: "Code",
+                    controller: _codeFiledController,
+                  ),
+                  InputField(
                     labelText: AppLocalizations.of(context).translate("firstName").capitalize,
                     controller: _firstNameFiledController,
                   ),
@@ -65,6 +71,10 @@ class _UserRegistrationState extends State<UserRegistration> {
                   InputField(
                     labelText: AppLocalizations.of(context).translate("address").capitalize,
                     controller: _addressFiledController,
+                  ),
+                  InputField(
+                    labelText: "Birth date",
+                    controller: _birthDateFiledController,
                   ),
                   CircularIconButton(
                     icon: Icons.person_rounded,
@@ -99,11 +109,13 @@ class _UserRegistrationState extends State<UserRegistration> {
       _justAddedUser = null;
     });
     User user = User(
+      code: _codeFiledController.text,
       firstName: _firstNameFiledController.text,
       lastName: _lastNameFiledController.text,
       telephoneNumber: _telephoneNumberFiledController.text,
       email: _emailFiledController.text,
       address: _addressFiledController.text,
+      birthDate: DateTime.parse(_birthDateFiledController.text),
     );
     Model.sharedInstance.addUser(user).then((result) {
       setState(() {

@@ -5,7 +5,7 @@ class ProductInPromoPurchase {
   int id;
   Purchase purchase;
   int quantity;
-  int finalPrice;
+  double finalPrice;
   ProductInPromo productInPromo;
 
   ProductInPromoPurchase({this.id, this.purchase, this.quantity, this.finalPrice, this.productInPromo});

@@ -7,10 +7,10 @@ class CreditCard {
   int expirationMonth;
   int expirationYear;
   int securityCode;
-  User user;
+  User owner;
   List<Purchase> purchases;
 
-  CreditCard({this.id, this.number, this.expirationMonth, this.expirationYear, this.securityCode, this.user, this.purchases});
+  CreditCard({this.id, this.number, this.expirationMonth, this.expirationYear, this.securityCode, this.owner, this.purchases});
 
   factory CreditCard.fromJson(Map<String, dynamic> json) {
     return CreditCard(
@@ -18,7 +18,7 @@ class CreditCard {
         number: json['number'],
         expirationMonth: json['expirationMonth'],
         expirationYear: json['expirationYear'],
-        user: json['user'],
+        owner: json['owner'],
         purchases: json['purchases']
     );
   }
@@ -28,7 +28,7 @@ class CreditCard {
     'number': number,
     'expirationMonth': expirationMonth,
     'expirationYear': expirationYear,
-    'user': user,
+    'owner': owner,
     'purchases': purchases
   };
 
@@ -36,4 +36,5 @@ class CreditCard {
   String toString() {
     return number;
   }
-}//Product
+
+}//CreditCard

@@ -57,7 +57,7 @@ class RestManager {
           case "put":
             response = await put(
               uri,
-              headers: headers,
+              body: formattedBody,
             );
             break;
           case "delete":

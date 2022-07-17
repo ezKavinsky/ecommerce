@@ -5,7 +5,7 @@ class ProductInPurchase {
   int id;
   Purchase purchase;
   int quantity;
-  int finalPrice;
+  double finalPrice;
   Product product;
 
   ProductInPurchase({this.id, this.purchase, this.quantity, this.finalPrice, this.product});
