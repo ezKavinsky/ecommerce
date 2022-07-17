@@ -5,6 +5,7 @@ import 'package:ecommerce/model/Model.dart';
 import 'package:ecommerce/model/objects/User.dart';
 import 'package:ecommerce/model/support/extensions/StringCapitalization.dart';
 import 'package:flutter/material.dart';
+import 'package:date_field/date_field.dart';
 
 
 class UserRegistration extends StatefulWidget {
@@ -18,6 +19,7 @@ class UserRegistration extends StatefulWidget {
 class _UserRegistrationState extends State<UserRegistration> {
   bool _adding = false;
   User _justAddedUser;
+  DateTime date;
 
   TextEditingController _codeFiledController = TextEditingController();
   TextEditingController _firstNameFiledController = TextEditingController();
@@ -25,8 +27,6 @@ class _UserRegistrationState extends State<UserRegistration> {
   TextEditingController _telephoneNumberFiledController = TextEditingController();
   TextEditingController _emailFiledController = TextEditingController();
   TextEditingController _addressFiledController = TextEditingController();
-  TextEditingController _birthDateFiledController = TextEditingController();
-
 
   @override
   Widget build(BuildContext context) {
@@ -72,9 +72,20 @@ class _UserRegistrationState extends State<UserRegistration> {
                     labelText: AppLocalizations.of(context).translate("address").capitalize,
                     controller: _addressFiledController,
                   ),
-                  InputField(
-                    labelText: "Birth date",
-                    controller: _birthDateFiledController,
+                  DateTimeFormField(
+                    decoration: const InputDecoration(
+                      hintStyle: TextStyle(color: Colors.amberAccent),
+                      errorStyle: TextStyle(color: Colors.redAccent),
+                      border: OutlineInputBorder(),
+                      suffixIcon: Icon(Icons.event_note),
+                      labelText: 'Birth date',
+                    ),
+                    mode: DateTimeFieldPickerMode.date,
+                    autovalidateMode: AutovalidateMode.always,
+                    onDateSelected: (DateTime value) {
+                      date = value;
+                      print(value);
+                    },
                   ),
                   CircularIconButton(
                     icon: Icons.person_rounded,
@@ -115,7 +126,7 @@ class _UserRegistrationState extends State<UserRegistration> {
       telephoneNumber: _telephoneNumberFiledController.text,
       email: _emailFiledController.text,
       address: _addressFiledController.text,
-      birthDate: DateTime.parse(_birthDateFiledController.text),
+      birthDate: date,
     );
     Model.sharedInstance.addUser(user).then((result) {
       setState(() {
