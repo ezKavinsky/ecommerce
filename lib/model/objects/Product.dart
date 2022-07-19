@@ -12,12 +12,13 @@ class Product {
   int quantity;
   int productionYear;
   bool freeShipping;
+  double shippingPrice;
   double score;
   List<ProductInPurchase> productsInPurchase;
   List<ProductInCart> productsInCarts;
   List<Review> reviews;
 
-  Product({this.id, this.name, this.brand, this.barCode, this.description, this.price, this.quantity,this.productionYear,this.freeShipping, this.score, this.productsInPurchase, this.productsInCarts, this.reviews});
+  Product({this.id, this.name, this.brand, this.barCode, this.description, this.price, this.quantity,this.productionYear,this.freeShipping, this.shippingPrice, this.score, this.productsInPurchase, this.productsInCarts, this.reviews});
 
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
@@ -30,6 +31,7 @@ class Product {
       quantity: json['quantity'],
       productionYear: json['productionYear'],
       freeShipping: json['freeShipping'],
+      shippingPrice: json['shippingPrice'],
       score: json['score'],
       productsInPurchase: json['productsInPurchase'],
       productsInCarts: json['productsInCarts'],
@@ -45,6 +47,7 @@ class Product {
     'price': price,
     'quantity': quantity,
     'freeShipping': freeShipping,
+    'shippingPrice': shippingPrice,
     'score': score,
     'productsInPurchase': productsInPurchase,
     'productsInCarts': productsInCarts,

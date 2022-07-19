@@ -1,12 +1,11 @@
-import 'package:ecommerce/model/objects/ProductInPromo.dart';
+import '../../model/objects/ProductInPromoInCart.dart';
 import 'package:flutter/material.dart';
 
+class ProductInPromoInCartCard extends StatelessWidget {
+  final ProductInPromoInCart productInPromoInCart;
 
-class ProductInPromoCard extends StatelessWidget {
-  final ProductInPromo productInPromo;
 
-
-  ProductInPromoCard({Key key, this.productInPromo}) : super(key: key);
+  ProductInPromoInCartCard({Key key, this.productInPromoInCart}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,23 +18,21 @@ class ProductInPromoCard extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              productInPromo.product.name,
+              productInPromoInCart.productInPromo.product.name,
               style: TextStyle(
                 fontSize: 40,
                 color: Theme.of(context).primaryColor,
                 fontStyle: FontStyle.italic,
               ),
-              textAlign: TextAlign.left,
             ),
             Text(
-                "price: " + productInPromo.discountPrice.toString(),
+                "price: " + productInPromoInCart.productInPromo.product.price.toString(),
                 style: TextStyle(
                   color: Theme.of(context).primaryColor,
-                ),
-              textAlign: TextAlign.left,
+                )
             ),
             Text(
-              "quantity: " + productInPromo.product.quantity.toString(),
+              "quantity: " + productInPromoInCart.productInPromo.product.quantity.toString(),
               style: TextStyle(
                 color: Theme.of(context).primaryColor,
               ),
@@ -45,4 +42,4 @@ class ProductInPromoCard extends StatelessWidget {
       ),
     );
   }
-}//ProductInPromoCard
+}//ProductInPromoInCartCard

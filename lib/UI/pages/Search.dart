@@ -1,4 +1,5 @@
 import 'package:ecommerce/UI/behaviors/AppLocalizations.dart';
+import 'package:ecommerce/UI/pages/ProductPage.dart';
 import 'package:ecommerce/UI/widgets/CircularIconButton.dart';
 import 'package:ecommerce/UI/widgets/InputField.dart';
 import 'package:ecommerce/UI/widgets/ProductCard.dart';
@@ -19,6 +20,7 @@ class Search extends StatefulWidget {
 class _SearchState extends State<Search> {
   bool _searching = false;
   List<Product> _products;
+  Product _product;
 
   TextEditingController _searchFiledController = TextEditingController();
 
@@ -44,7 +46,10 @@ class _SearchState extends State<Search> {
         children: [
           Flexible(
             child: InputField(
-              labelText: AppLocalizations.of(context).translate("search").capitalize,
+              labelText: AppLocalizations
+                  .of(context)
+                  .translate("search")
+                  .capitalize,
               controller: _searchFiledController,
               onSubmit: (value) {
                 _search();
@@ -63,17 +68,20 @@ class _SearchState extends State<Search> {
   }
 
   Widget bottom() {
-    return  !_searching ?
-              _products == null ?
-                SizedBox.shrink() :
-                _products.length == 0 ?
-                  noResults() :
-                  yesResults() :
-              CircularProgressIndicator();
+    return !_searching ?
+    _products == null ?
+    SizedBox.shrink() :
+    _products.length == 0 ?
+    noResults() :
+    yesResults() :
+    CircularProgressIndicator();
   }
 
   Widget noResults() {
-    return Text(AppLocalizations.of(context).translate("no_results").capitalize + "!");
+    return Text(AppLocalizations
+        .of(context)
+        .translate("no_results")
+        .capitalize + "!");
   }
 
   Widget yesResults() {
@@ -82,8 +90,11 @@ class _SearchState extends State<Search> {
         child: ListView.builder(
           itemCount: _products.length,
           itemBuilder: (context, index) {
-            return ProductCard(
-              product: _products[index],
+            return GestureDetector(
+                child: ProductCard(
+                  product: _products[index],
+                ),
+                onTap: () => _getProduct(_products[index].id),
             );
           },
         ),
@@ -96,7 +107,8 @@ class _SearchState extends State<Search> {
       _searching = true;
       _products = null;
     });
-    Model.sharedInstance.searchProduct(_searchFiledController.text).then((result) {
+    Model.sharedInstance.searchProduct(_searchFiledController.text).then((
+        result) {
       setState(() {
         _searching = false;
         _products = result;
@@ -104,5 +116,12 @@ class _SearchState extends State<Search> {
     });
   }
 
-
+  void _getProduct(int id) {
+    Model.sharedInstance.getProduct(id.toString()).then((result) {
+      _product = result;
+    });
+    setState(() {
+      Navigator.push(context, new MaterialPageRoute(builder: (context) => new ProductPage(product:_product)));
+    });
+  }
 }

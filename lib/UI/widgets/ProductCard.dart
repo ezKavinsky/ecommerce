@@ -27,13 +27,13 @@ class ProductCard extends StatelessWidget {
               ),
             ),
             Text(
-                    product.price.toString(),
+                   "price: " + product.price.toString(),
                     style: TextStyle(
                       color: Theme.of(context).primaryColor,
                     )
                   ),
             Text(
-              product.description,
+              "quantity: " + product.quantity.toString(),
               style: TextStyle(
                 color: Theme.of(context).primaryColor,
               ),

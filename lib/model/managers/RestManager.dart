@@ -57,6 +57,7 @@ class RestManager {
           case "put":
             response = await put(
               uri,
+              headers: headers,
               body: formattedBody,
             );
             break;
@@ -87,10 +88,10 @@ class RestManager {
   }
 
   Future<String> makeGetRequest(String serverAddress, String servicePath, [Map<String, String> value, TypeHeader type]) async {
-    return _makeRequest(serverAddress, servicePath, "get", type, value: value);
+    return _makeRequest(serverAddress, servicePath, "get", type, body: value);
   }
 
-  Future<String> makePutRequest(String serverAddress, String servicePath, [Map<String, String> value, TypeHeader type]) async {
+  Future<String> makePutRequest(String serverAddress, String servicePath, dynamic value, {TypeHeader type = TypeHeader.json}) async {
     return _makeRequest(serverAddress, servicePath, "put", type, value: value);
   }
 

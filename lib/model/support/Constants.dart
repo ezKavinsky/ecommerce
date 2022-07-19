@@ -17,12 +17,18 @@ class Constants {
   static final String REQUEST_SEARCH_PRODUCTS = "/products/search/by_name";
   static final String REQUEST_ADD_USER = "/users";
   static final String REQUEST_PROMOS = "/promos";
+  static final String REQUEST_PRODUCT= "/products/";
+  static final String ADD_PRODUCT_IN_CART = "/cart";
+  static final String REQUEST_REVIEWS = "/reviews";
+  static final String REQUEST_PRODUCTS_IN_PROMO = "/productsInPromo";
+
 
   // states
   static final String STATE_CLUB = "club";
 
   // responses
   static final String RESPONSE_ERROR_MAIL_USER_ALREADY_EXISTS = "ERROR_MAIL_USER_ALREADY_EXISTS";
+  static final String RESPONSE_ERROR_PRODUCT_NOT_FOUND = "ERROR_PRODUCT_NOT_FOUND";
 
   // messages
   static final String MESSAGE_CONNECTION_ERROR = "connection_error";

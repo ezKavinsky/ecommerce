@@ -10,10 +10,15 @@ class Account extends StatefulWidget {
 
   @override
   _AccountState createState() => _AccountState();
+
+  static User getLoggedUser(){
+    return _AccountState.user;
+  }
+
 }
 
 class _AccountState extends State<Account> {
-  User user;
+  static User user;
 
   @override
   Widget build(BuildContext context) {

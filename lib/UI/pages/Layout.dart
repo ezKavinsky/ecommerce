@@ -29,7 +29,7 @@ class _LayoutState extends State<Layout> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 4,
       child: Scaffold(
         appBar: AppBar(
           shape: RoundedRectangleBorder(
@@ -42,6 +42,7 @@ class _LayoutState extends State<Layout> {
             tabs: [
               Tab(text: AppLocalizations.of(context).translate("home").capitalize, icon: Icon(Icons.home_rounded)),
               Tab(text: AppLocalizations.of(context).translate("search").capitalize, icon: Icon(Icons.search_rounded)),
+              Tab(text: "Promo", icon: Icon(Icons.newspaper)),
               Tab(text: AppLocalizations.of(context).translate("user").capitalize, icon: Icon(Icons.person_rounded)),
             ],
           ),
@@ -50,6 +51,7 @@ class _LayoutState extends State<Layout> {
           children: [
             Home(),
             Search(),
+            Promoting(),
             UserRegistration(),
           ],
         ),

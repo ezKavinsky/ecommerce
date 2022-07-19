@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:ffi';
+import 'package:ecommerce/UI/pages/ProductPage.dart';
 import 'package:ecommerce/model/managers/RestManager.dart';
 import 'package:ecommerce/model/objects/AuthenticationData.dart';
 import 'package:ecommerce/model/objects/Product.dart';
@@ -7,6 +9,11 @@ import 'package:ecommerce/model/objects/Promo.dart';
 import 'package:ecommerce/model/objects/User.dart';
 import 'package:ecommerce/model/support/Constants.dart';
 import 'package:ecommerce/model/support/LogInResult.dart';
+import 'package:flutter/material.dart';
+
+import 'objects/Cart.dart';
+import 'objects/ProductInPromo.dart';
+import 'objects/Review.dart';
 
 
 class Model {
@@ -91,9 +98,51 @@ class Model {
     }
   }
 
+  Future<Cart> addProductToCart(String id, String idC, int quantity) async {
+    try{
+      return Cart.fromJson(json.decode(await _restManager.makePostRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_PRODUCT + id + Constants.ADD_PRODUCT_IN_CART, {idC, quantity} )));
+    } catch(e){
+      return null;
+    }
+  }
+
+  Future<List<Review>> getReviews(String id) async {
+    try{
+      return List<Review>.from(json.decode(await _restManager.makeGetRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_PRODUCT + id + Constants.REQUEST_REVIEWS)).map((i) => Review.fromJson(i)).toList());
+    }catch(e){
+      return null;
+    }
+  }
+
+  Future<Review> getReview(String id1, String id2) async {
+    try{
+      return Review.fromJson(json.decode(await _restManager.makeGetRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_PRODUCT + id1 + Constants.REQUEST_REVIEWS + id2)))
+    }catch(e){
+      return null;
+    }
+  }
+
+
+
   Future<List<Promo>> showPromos() async{
     try{
       return List<Promo>.from(json.decode(await _restManager.makeGetRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_PROMOS)).map((i) => Promo.fromJson(i)).toList());
+    }catch(e){
+      return null;
+    }
+  }
+
+  Future<Product> getProduct(String id) async{
+    try {
+      return Product.fromJson(json.decode(await _restManager.makeGetRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_PRODUCT + id)));
+      }catch(e){
+        return null;
+    }
+  }
+
+  Future<ProductInPromo> getProductInPromo(String id1, String id2) async{
+    try {
+      return ProductInPromo.fromJson(json.decode(await _restManager.makeGetRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_PROMOS + id2 + Constants.REQUEST_PRODUCTS_IN_PROMO + id1)));
     }catch(e){
       return null;
     }
@@ -114,5 +163,20 @@ class Model {
     }
   }
 
+  Future<Review> updateTitle(String id, String title) async{
+    try{
+      return Review.fromJson(json.decode(await _restManager.makePutRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_REVIEWS + id, title)));
+    }catch(e){
+      return null;
+    }
+  }
+
+  Future<Review> updateComment(String id, String comment) async{
+    try{
+      return Review.fromJson(json.decode(await _restManager.makePutRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_REVIEWS + id, comment)));
+    }catch(e){
+      return null;
+    }
+  }
 
 }

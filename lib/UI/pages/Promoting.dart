@@ -15,36 +15,56 @@ class _PromotingState extends State<Promoting> {
   List<Promo> _promos;
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: _getPromos(),
-      ),
-    );
+  void initState(){
+    super.initState();
+    _getPromos();
   }
 
-  Widget _getPromos() {
-    _get();
-    return Expanded(
-      child: Container(
-        child: ListView.builder(
-          itemCount: _promos.length,
-          itemBuilder: (context, index) {
-            return PromoCard(
-              promo: _promos[index],
-            );
-          },
-        ),
-      ),
-    );
-  }
-
-  void _get() {
+  void _getPromos() {
     Model.sharedInstance.showPromos().then((result) {
-      setState(() {
-        _promos = result;
+      setState((){
+       print(result.length);
       });
     });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Center(
+            child : Column(
+                children: [
+                  Padding(
+                padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                  child: Text(
+                    "Promos",
+                    style: TextStyle(
+                    fontSize: 50,
+                    color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 10, 10, 0),
+                child: SizedBox.shrink(
+                  child: Container(
+                child: ListView.builder(
+                itemCount: _promos.length,
+                  itemBuilder: (context, index) {
+                    return PromoCard(
+                      promo: _promos[index],
+                    );
+                  },
+                ),
+              ),
+                )
+     )
+          ]
+    )
+    )
+    )
+      );
   }
 
 }
