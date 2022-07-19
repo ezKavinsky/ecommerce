@@ -174,7 +174,23 @@ class Model {
 
   Future<Cart> clearCart(String id1) async {
     try{
-      return Cart.fromJson(json.decode(await _restManager.makePutRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_ADD_USER + id1 + Constants.REQUEST_CLEAR_CART, value)))
+      return Cart.fromJson(json.decode(await _restManager.makePutRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_ADD_USER + id1 + Constants.REQUEST_CLEAR_CART, null)));
+    }catch(e){
+      return null;
+    }
+  }
+
+  Future<Cart> removeProduct(String id1, String id2) async{
+    try{
+      return Cart.fromJson(json.decode(await _restManager.makeDeleteRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_ADD_USER + id2 + Constants.REQUEST_PRODUCTS_IN_CART + id1)));
+    }catch(e){
+      return null;
+    }
+  }
+
+  Future<Cart> removeProductInPromo(String id1, String id2) async{
+    try{
+      return Cart.fromJson(json.decode(await _restManager.makeDeleteRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_ADD_USER + id2 + Constants.REQUEST_PRODUCTS_IN_CART + id1)));
     }catch(e){
       return null;
     }

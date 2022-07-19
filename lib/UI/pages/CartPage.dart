@@ -2,7 +2,6 @@ import 'package:ecommerce/UI/widgets/CircularIconButton.dart';
 import 'package:ecommerce/model/Model.dart';
 import 'package:ecommerce/model/objects/Purchase.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../../model/objects/Cart.dart';
 import '../../model/objects/Product.dart';
 import '../../model/objects/ProductInCart.dart';
@@ -71,11 +70,21 @@ class _CartPageState extends State<CartPage>{
                           child: ListView.builder(
                             itemCount: _products.length,
                             itemBuilder: (context, index) {
-                              return GestureDetector(
-                                child: ProductInCartCard(
-                                  productInCart: _products[index],
-                                ),
-                                onTap: () => _getProduct(_products[index].product),
+                              return Column(
+                                  children: [
+                                    GestureDetector(
+                                      child: ProductInCartCard(
+                                        productInCart: _products[index],
+                                      ),
+                                      onTap: () => _getProduct(_products[index].product),
+                                    ),
+                                    CircularIconButton(
+                                      icon: Icons.remove,
+                                      onPressed: () {
+                                        _removeProduct(widget.cart.buyer.id.toString(), _products[index].id.toString());
+                                      },
+                                    )
+                                  ]
                               );
                             },
                           ),
@@ -94,11 +103,21 @@ class _CartPageState extends State<CartPage>{
                           child: ListView.builder(
                             itemCount: _productsInPromo.length,
                             itemBuilder: (context, index) {
-                              return GestureDetector(
-                                child: ProductInPromoInCartCard(
-                                  productInPromoInCart: _productsInPromo[index],
-                                ),
-                                onTap: () => _getProductInPromo(_productsInPromo[index].productInPromo),
+                              return Column(
+                                children: [
+                              GestureDetector(
+                              child: ProductInPromoInCartCard(
+                              productInPromoInCart: _productsInPromo[index],
+                              ),
+                              onTap: () => _getProductInPromo(_productsInPromo[index].productInPromo),
+                              ),
+                                  CircularIconButton(
+                                    icon: Icons.remove,
+                                    onPressed: () {
+                                      _removeProductInPromo(widget.cart.buyer.id.toString(), _productsInPromo[index].id.toString());
+                                    },
+                                  )
+                                ]
                               );
                             },
                           ),
@@ -160,6 +179,15 @@ class _CartPageState extends State<CartPage>{
     });
   }
 
-  void _removeProduct()
+  void _removeProductInPromo(String id1, String id2) {
+    Model.sharedInstance.removeProductInPromo(id1, id2).then((result) {
+      setState(() {});
+    });
+  }
+    void _removeProduct(String id1, String id2) {
+      Model.sharedInstance.removeProduct(id1, id2).then((result) {
+        setState(() {});
+      });
+    }
 
-}
+  }
