@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:ffi';
-import 'package:ecommerce/UI/pages/ProductPage.dart';
 import 'package:ecommerce/model/managers/RestManager.dart';
 import 'package:ecommerce/model/objects/AuthenticationData.dart';
 import 'package:ecommerce/model/objects/Product.dart';
@@ -9,8 +7,6 @@ import 'package:ecommerce/model/objects/Promo.dart';
 import 'package:ecommerce/model/objects/User.dart';
 import 'package:ecommerce/model/support/Constants.dart';
 import 'package:ecommerce/model/support/LogInResult.dart';
-import 'package:flutter/material.dart';
-
 import 'objects/Cart.dart';
 import 'objects/ProductInPromo.dart';
 import 'objects/Purchase.dart';
@@ -236,6 +232,53 @@ class Model {
       }else {
         return User.fromJson(jsonDecode(rawResult));
       }
+    }catch(e){
+      return null;
+    }
+  }
+
+  Future<User> updateFirstName(String id, String firstName) async{
+    try{
+      return User.fromJson(json.decode(await _restManager.makePutRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_ADD_USER + id, firstName)));
+    }catch(e){
+      return null;
+    }
+  }
+
+  Future<User> updateLastName(String id, String lastName) async{
+    try{
+      return User.fromJson(json.decode(await _restManager.makePutRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_ADD_USER + id, lastName)));
+    }catch(e){
+      return null;
+    }
+  }
+
+  Future<User> updateCode(String id, String code) async{
+    try{
+      return User.fromJson(json.decode(await _restManager.makePutRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_ADD_USER + id, code)));
+    }catch(e){
+      return null;
+    }
+  }
+
+  Future<User> updateTelephoneNumber(String id, String telephoneNumber) async{
+    try{
+      return User.fromJson(json.decode(await _restManager.makePutRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_ADD_USER + id, telephoneNumber)));
+    }catch(e){
+      return null;
+    }
+  }
+
+  Future<User> updateEmail(String id, String email) async{
+    try{
+      return User.fromJson(json.decode(await _restManager.makePutRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_ADD_USER + id, email)));
+    }catch(e){
+      return null;
+    }
+  }
+  Future<User> updateAddress(String id, String address) async{
+    try{
+      return User.fromJson(json.decode(await _restManager.makePutRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_ADD_USER + id, address)));
     }catch(e){
       return null;
     }

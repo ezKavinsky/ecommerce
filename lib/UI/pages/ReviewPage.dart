@@ -60,7 +60,7 @@ class _ReviewPageState extends State<ReviewPage>{
                         },
                         style: TextStyle(
                             color: Theme.of(context).primaryColor,
-                            fontSize: 30
+                            fontSize: 50
                         ),
                       ),
                       TextField(

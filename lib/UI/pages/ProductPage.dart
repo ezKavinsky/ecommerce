@@ -4,7 +4,6 @@ import 'package:ecommerce/UI/widgets/ReviewCard.dart';
 import 'package:ecommerce/model/Model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-
 import '../../model/objects/Cart.dart';
 import '../../model/objects/Product.dart';
 import '../../model/objects/Review.dart';
@@ -204,7 +203,8 @@ class _ProductPageState extends State<ProductPage>{
   }
 
   void _addToCart(String id, int quantity){
-    _cart = Account.getLoggedUser().cart;
+    Account user = Account();
+    _cart = user.getUser().cart;
     Model.sharedInstance.addProductToCart(id, _cart.id.toString(), quantity).then((result) {
       setState((){
         Navigator.push(context, new MaterialPageRoute(builder: (context) => new CartPage(cart : _cart)));
