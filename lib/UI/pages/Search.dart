@@ -94,7 +94,7 @@ class _SearchState extends State<Search> {
                 child: ProductCard(
                   product: _products[index],
                 ),
-                onTap: () => _getProduct(_products[index].id),
+                onTap: () => _getProduct(_products[index]),
             );
           },
         ),
@@ -116,10 +116,7 @@ class _SearchState extends State<Search> {
     });
   }
 
-  void _getProduct(int id) {
-    Model.sharedInstance.getProduct(id.toString()).then((result) {
-      _product = result;
-    });
+  void _getProduct(Product product) {
     setState(() {
       Navigator.push(context, new MaterialPageRoute(builder: (context) => new ProductPage(product:_product)));
     });

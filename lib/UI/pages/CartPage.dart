@@ -1,4 +1,5 @@
 import 'package:ecommerce/UI/widgets/CircularIconButton.dart';
+import 'package:ecommerce/UI/widgets/InputField.dart';
 import 'package:ecommerce/model/Model.dart';
 import 'package:ecommerce/model/objects/Purchase.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,8 @@ class _CartPageState extends State<CartPage>{
   List<ProductInCart> _products;
   List<ProductInPromoInCart> _productsInPromo;
   Purchase _purchase;
+  TextEditingController _quantityProductController = TextEditingController();
+  TextEditingController _quantityProductInPromoController = TextEditingController();
 
   @override
   void initState(){
@@ -78,11 +81,37 @@ class _CartPageState extends State<CartPage>{
                                       ),
                                       onTap: () => _getProduct(_products[index].product),
                                     ),
-                                    CircularIconButton(
-                                      icon: Icons.remove,
-                                      onPressed: () {
-                                        _removeProduct(widget.cart.buyer.id.toString(), _products[index].id.toString());
-                                      },
+                                    Row(
+                                      children: [
+                                        CircularIconButton(
+                                          icon: Icons.remove_shopping_cart_outlined,
+                                          onPressed: () {
+                                            _removeProduct(widget.cart.buyer.id.toString(), _products[index].id.toString());
+                                          },
+                                        ),
+                                        Row(
+                                          children: [
+                                            CircularIconButton(
+                                              icon: Icons.add,
+                                              onPressed: () {
+                                                int quantity = int.parse(_quantityProductController.text);
+                                                _updateQuantityProduct(widget.cart.id.toString(), _products[index].id.toString(), quantity);
+                                              },
+                                            ),
+                                            InputField(
+                                              labelText: "Quantity",
+                                              controller: _quantityProductController,
+                                            ),
+                                            CircularIconButton(
+                                              icon: Icons.remove,
+                                              onPressed: () {
+                                                int quantity = -int.parse(_quantityProductController.text);
+                                                _updateQuantityProduct(widget.cart.id.toString(), _products[index].id.toString(), quantity);
+                                              },
+                                            ),
+                                          ],
+                                        )
+                                      ],
                                     )
                                   ]
                               );
@@ -111,11 +140,37 @@ class _CartPageState extends State<CartPage>{
                               ),
                               onTap: () => _getProductInPromo(_productsInPromo[index].productInPromo),
                               ),
-                                  CircularIconButton(
-                                    icon: Icons.remove,
-                                    onPressed: () {
-                                      _removeProductInPromo(widget.cart.buyer.id.toString(), _productsInPromo[index].id.toString());
-                                    },
+                                  Row(
+                                    children: [
+                                      CircularIconButton(
+                                        icon: Icons.remove_shopping_cart_outlined,
+                                        onPressed: () {
+                                          _removeProductInPromo(widget.cart.buyer.id.toString(), _productsInPromo[index].id.toString());
+                                        },
+                                      ),
+                                      Row(
+                                        children: [
+                                          CircularIconButton(
+                                            icon: Icons.add,
+                                            onPressed: () {
+                                              int quantity = int.parse(_quantityProductInPromoController.text);
+                                              _updateQuantityProductInPromo(widget.cart.id.toString(), _productsInPromo[index].id.toString(), quantity);
+                                            },
+                                          ),
+                                          InputField(
+                                            labelText: "Quantity",
+                                            controller: _quantityProductInPromoController,
+                                          ),
+                                          CircularIconButton(
+                                            icon: Icons.remove,
+                                            onPressed: () {
+                                              int quantity = -int.parse(_quantityProductInPromoController.text);
+                                              _updateQuantityProduct(widget.cart.id.toString(), _products[index].id.toString(), quantity);
+                                            },
+                                          ),
+                                        ],
+                                      )
+                                    ],
                                   )
                                 ]
                               );
@@ -189,5 +244,17 @@ class _CartPageState extends State<CartPage>{
         setState(() {});
       });
     }
+
+    void _updateQuantityProduct(String id1, String id2, int quantity){
+    Model.sharedInstance.updateProductQuantity(id1, id2, quantity).then((result) {
+      setState((){});
+    });
+    }
+
+  void _updateQuantityProductInPromo(String id1, String id2, int quantity){
+    Model.sharedInstance.updateProductInPromoQuantity(id1, id2, quantity).then((result) {
+      setState((){});
+    });
+  }
 
   }

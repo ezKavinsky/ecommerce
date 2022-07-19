@@ -52,8 +52,11 @@ class _PromotingState extends State<Promoting> {
                 child: ListView.builder(
                 itemCount: _promos.length,
                   itemBuilder: (context, index) {
-                    return PromoCard(
-                      promo: _promos[index],
+                    return GestureDetector(
+                      child: PromoCard(
+                        promo: _promos[index],
+                      ),
+                      onTap: () => _getPromo(_promos[index]),
                     );
                   },
                 ),
@@ -66,5 +69,13 @@ class _PromotingState extends State<Promoting> {
     )
       );
   }
+
+  void _getPromo(Promo promo){
+    setState((){
+      Navigator.push(context, new MaterialPageRoute(builder: (context) => new PromoPage(promo: promo)));
+    });
+  }
+
+
 
 }

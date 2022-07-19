@@ -101,7 +101,23 @@ class Model {
 
   Future<Cart> addProductToCart(String id, String idC, int quantity) async {
     try{
-      return Cart.fromJson(json.decode(await _restManager.makePostRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_PRODUCT + id + Constants.ADD_PRODUCT_IN_CART, {idC, quantity} )));
+      return Cart.fromJson(json.decode(await _restManager.makePostRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_PRODUCT + id + Constants.REQUEST_ADD_PRODUCT_IN_CART, {idC, quantity} )));
+    } catch(e){
+      return null;
+    }
+  }
+
+  Future<Cart> updateProductQuantity(String id, String idC, int quantity) async {
+    try{
+      return Cart.fromJson(json.decode(await _restManager.makePutRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_PRODUCT + id + Constants.REQUEST_PRODUCT, {idC, quantity} )));
+    } catch(e){
+      return null;
+    }
+  }
+
+  Future<Cart> updateProductInPromoQuantity(String id, String idC, int quantity) async {
+    try{
+      return Cart.fromJson(json.decode(await _restManager.makePutRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_PRODUCT + id + Constants.REQUEST_PRODUCTS_IN_PROMO, {idC, quantity} )));
     } catch(e){
       return null;
     }
