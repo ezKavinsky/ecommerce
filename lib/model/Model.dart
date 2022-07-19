@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 
 import 'objects/Cart.dart';
 import 'objects/ProductInPromo.dart';
+import 'objects/Purchase.dart';
 import 'objects/Review.dart';
 
 
@@ -163,17 +164,33 @@ class Model {
     }
   }
 
-  Future<Review> updateTitle(String id, String title) async{
+  Future<Purchase> addPurchase(String id1) async{
     try{
-      return Review.fromJson(json.decode(await _restManager.makePutRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_REVIEWS + id, title)));
+      return Purchase.fromJson(json.decode(await _restManager.makePostRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_ADD_USER + id1 + Constants.REQUEST_ADD_PRODUCT_IN_CART, null)));
     }catch(e){
       return null;
     }
   }
 
-  Future<Review> updateComment(String id, String comment) async{
+  Future<Cart> clearCart(String id1) async {
     try{
-      return Review.fromJson(json.decode(await _restManager.makePutRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_REVIEWS + id, comment)));
+      return Cart.fromJson(json.decode(await _restManager.makePutRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_ADD_USER + id1 + Constants.REQUEST_CLEAR_CART, value)))
+    }catch(e){
+      return null;
+    }
+  }
+
+  Future<Review> updateTitle(String id1, String id2, String title) async{
+    try{
+      return Review.fromJson(json.decode(await _restManager.makePutRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_PRODUCT + id2 + Constants.REQUEST_REVIEWS + id1, title)));
+    }catch(e){
+      return null;
+    }
+  }
+
+  Future<Review> updateComment(String id1, String id2, String comment) async{
+    try{
+      return Review.fromJson(json.decode(await _restManager.makePutRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_PRODUCT + id2 + Constants.REQUEST_REVIEWS + id1, comment)));
     }catch(e){
       return null;
     }

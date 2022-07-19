@@ -56,7 +56,7 @@ class _ReviewPageState extends State<ReviewPage>{
                           labelText: widget.review.title,
                         ),
                         onEditingComplete: (){
-                          _updateTitle(widget.review.id.toString(), widget.review.title);
+                          _updateTitle(widget.review.id.toString(), widget.review.product.id.toString(), widget.review.title);
                         },
                         style: TextStyle(
                             color: Theme.of(context).primaryColor,
@@ -69,7 +69,7 @@ class _ReviewPageState extends State<ReviewPage>{
                             labelText: widget.review.comment,
                           ),
                           onEditingComplete: () {
-                            _updateComment(widget.review.id.toString(), widget.review.comment);
+                            _updateComment(widget.review.id.toString(), widget.review.product.id.toString(), widget.review.comment);
                           },
                           style: TextStyle(
                               color: Theme.of(context).primaryColor,
@@ -103,16 +103,16 @@ class _ReviewPageState extends State<ReviewPage>{
     });
   }
 
-  void _updateComment(String id, String comment){
-    Model.sharedInstance.updateComment(id, comment).then((result) {
+  void _updateComment(String id1, String id2, String comment){
+    Model.sharedInstance.updateComment(id1, id2, comment).then((result) {
       setState((){
         _editable = !_editable;
       });
     });
   }
 
-  void _updateTitle(String id, String title){
-    Model.sharedInstance.updateTitle(id, title).then((result) {
+  void _updateTitle(String id1, String id2, String title){
+    Model.sharedInstance.updateTitle(id1, id2, title).then((result) {
       setState((){
         _editable = !_editable;
       });

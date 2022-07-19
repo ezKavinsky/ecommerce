@@ -1,5 +1,6 @@
 import 'package:ecommerce/UI/widgets/CircularIconButton.dart';
 import 'package:ecommerce/model/Model.dart';
+import 'package:ecommerce/model/objects/Purchase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../../model/objects/Cart.dart';
@@ -23,7 +24,14 @@ class CartPage extends StatefulWidget{
 class _CartPageState extends State<CartPage>{
   List<ProductInCart> _products;
   List<ProductInPromoInCart> _productsInPromo;
+  Purchase _purchase;
 
+  @override
+  void initState(){
+    super.initState();
+    _products = widget.cart.products;
+    _productsInPromo = widget.cart.productsInPromo;
+  }
 
   @override
   Widget build(BuildContext context){
@@ -50,9 +58,7 @@ class _CartPageState extends State<CartPage>{
                     color: Theme.of(context).primaryColor,
                   ),
                 ),
-                Column(
-                  children: [
-                    Text(
+                Text(
                       "Products",
                       textAlign: TextAlign.left,
                       style: TextStyle(
@@ -60,8 +66,8 @@ class _CartPageState extends State<CartPage>{
                         color: Theme.of(context).primaryColor,
                       ),
                     ),
-                    Expanded(
-                        child: Container(
+                Expanded(
+                        child: _products.length <= 0 ? Text("Empty") : Container(
                           child: ListView.builder(
                             itemCount: _products.length,
                             itemBuilder: (context, index) {
@@ -75,7 +81,7 @@ class _CartPageState extends State<CartPage>{
                           ),
                         )
                     ),
-                    Text(
+                Text(
                       "Products in promo",
                       textAlign: TextAlign.left,
                       style: TextStyle(
@@ -83,8 +89,8 @@ class _CartPageState extends State<CartPage>{
                         color: Theme.of(context).primaryColor,
                       ),
                     ),
-                    Expanded(
-                        child: Container(
+                Expanded(
+                        child: _productsInPromo.length <= 0 ? Text("Empty") : Container(
                           child: ListView.builder(
                             itemCount: _productsInPromo.length,
                             itemBuilder: (context, index) {
@@ -97,11 +103,32 @@ class _CartPageState extends State<CartPage>{
                             },
                           ),
                         )
+                    ),
+                Row(
+                  children: [
+                    Align(
+                      alignment: Alignment.bottomLeft,
+                      child: CircularIconButton(
+                          icon: Icons.remove_shopping_cart,
+                          onPressed: () {
+                            _clear(widget.cart.buyer.id.toString());
+                          }
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: CircularIconButton(
+                          icon: Icons.shopping_cart_checkout,
+                          onPressed: () {
+                            _makePurchase(widget.cart.buyer.id.toString());
+                          }
+                      ),
                     )
                   ],
                 )
-              ]
-          ),
+
+              ],
+                ),
         )
     );
   }
@@ -117,4 +144,22 @@ class _CartPageState extends State<CartPage>{
       Navigator.push(context, new MaterialPageRoute(builder: (context) => new ProductInPromoPage(productInPromo : productInPromo)));
     });
   }
+
+  void _makePurchase(String id1){
+    Model.sharedInstance.addPurchase(id1).then((result) {
+      _purchase = result;
+      setState((){
+        Navigator.push(context, new MaterialPageRoute(builder: (context) => new PurchasePage(purchase : _purchase)));
+      });
+    });
+  }
+
+  void _clear(String id1){
+    Model.sharedInstance.clearCart(id1).then((result) {
+      setState((){});
+    });
+  }
+
+  void _removeProduct()
+
 }
