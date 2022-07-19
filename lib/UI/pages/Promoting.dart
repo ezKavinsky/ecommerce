@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../model/Model.dart';
 import '../../model/objects/Promo.dart';
 import '../widgets/PromoCard.dart';
+import 'PromoPage.dart';
 
 class Promoting extends StatefulWidget {
   Promoting({Key key}) : super(key: key);

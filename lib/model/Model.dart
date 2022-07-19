@@ -88,7 +88,7 @@ class Model {
     Map<String, String> params = Map();
     params["name"] = name;
     try {
-      return List<Product>.from(json.decode(await _restManager.makeGetRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_SEARCH_PRODUCTS, params)).map((i) => Product.fromJson(i)).toList());
+      return List<Product>.from(json.decode(await _restManager.makeGetRequestParam(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_SEARCH_PRODUCTS, params)).map((i) => Product.fromJson(i)).toList());
     }
     catch (e) {
       return null; // not the best solution
@@ -98,6 +98,14 @@ class Model {
   Future<Cart> addProductToCart(String id, String idC, int quantity) async {
     try{
       return Cart.fromJson(json.decode(await _restManager.makePostRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_PRODUCT + id + Constants.REQUEST_ADD_PRODUCT_IN_CART, {idC, quantity} )));
+    } catch(e){
+      return null;
+    }
+  }
+
+  Future<Cart> addProductInPromoToCart(String id1, String id2, String idC, int quantity) async {
+    try{
+      return Cart.fromJson(json.decode(await _restManager.makePostRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_PROMOS + id2 + Constants.REQUEST_PRODUCTS_IN_PROMO + id1, {idC, quantity} )));
     } catch(e){
       return null;
     }

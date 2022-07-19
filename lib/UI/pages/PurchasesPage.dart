@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../model/objects/Purchase.dart';
 import '../widgets/PurchaseCard.dart';
+import 'PurchasePage.dart';
 
 class PurchasesPage extends StatefulWidget{
   PurchasesPage({Key key, this.purchases}) : super (key : key);

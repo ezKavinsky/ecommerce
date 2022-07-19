@@ -5,6 +5,7 @@ import '../../model/objects/ProductInPromo.dart';
 import '../../model/objects/Purchase.dart';
 import '../widgets/CircularIconButton.dart';
 import '../widgets/ProductInPromoPurchaseCard.dart';
+import 'ProductInPromoPage.dart';
 import 'ProductPage.dart';
 
 class PurchasePage extends StatefulWidget{

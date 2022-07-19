@@ -10,7 +10,9 @@ import '../../model/objects/ProductInPromo.dart';
 import '../../model/objects/ProductInPromoInCart.dart';
 import '../widgets/ProductInCartCard.dart';
 import '../widgets/ProductInPromoInCartCard.dart';
+import 'ProductInPromoPage.dart';
 import 'ProductPage.dart';
+import 'PurchasePage.dart';
 
 class CartPage extends StatefulWidget{
   CartPage({Key key, this.cart}) : super (key : key);
