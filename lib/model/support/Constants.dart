@@ -23,6 +23,7 @@ class Constants {
   static final String REQUEST_PRODUCTS_IN_PROMO = "/productsInPromo";
   static final String REQUEST_CLEAR_CART = "/cart/clear";
   static final String REQUEST_PRODUCTS_IN_CART= "/cart/products";
+  static final String REQUEST_USER_BY_EMAIL=" /users/getByEmail";
 
 
   // states
@@ -31,6 +32,7 @@ class Constants {
   // responses
   static final String RESPONSE_ERROR_MAIL_USER_ALREADY_EXISTS = "ERROR_MAIL_USER_ALREADY_EXISTS";
   static final String RESPONSE_ERROR_PRODUCT_NOT_FOUND = "ERROR_PRODUCT_NOT_FOUND";
+  static final String RESPONSE_ERROR_USER_NOT_FOUND ="ERROR_USER_NOT_FOUND";
 
   // messages
   static final String MESSAGE_CONNECTION_ERROR = "connection_error";

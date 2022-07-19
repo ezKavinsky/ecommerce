@@ -2,23 +2,18 @@ import 'package:ecommerce/model/support/extensions/StringCapitalization.dart';
 import 'package:flutter/material.dart';
 import '../../model/objects/User.dart';
 import '../behaviors/AppLocalizations.dart';
-import 'PurchasesList.dart';
 
 class Account extends StatefulWidget {
-
-  Account({Key key}) : super(key: key);
+  Account({Key key, this.user}) : super(key: key);
+  final User user;
 
   @override
   _AccountState createState() => _AccountState();
 
-  static User getLoggedUser(){
-    return _AccountState.user;
-  }
 
 }
 
 class _AccountState extends State<Account> {
-  static User user;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +27,7 @@ class _AccountState extends State<Account> {
           Row(
             children: [
               Text(
-                user.firstName,
+                widget.user.firstName,
                 style: TextStyle(
                   fontSize: 30,
                   color: Theme.of(context).primaryColor,
@@ -40,7 +35,7 @@ class _AccountState extends State<Account> {
                 ),
               ),
               Text(
-                user.lastName,
+                widget.user.lastName,
                 style: TextStyle(
                   fontSize: 30,
                   color: Theme.of(context).primaryColor,
@@ -51,7 +46,7 @@ class _AccountState extends State<Account> {
           ),
           Center(
             child: Text(
-              user.code,
+              widget.user.code,
               style: TextStyle(
                 color: Theme.of(context).primaryColor,
               ),
@@ -60,25 +55,25 @@ class _AccountState extends State<Account> {
           Row(
             children: [
               Text(
-                user.telephoneNumber,
+                widget.user.telephoneNumber,
                 style: TextStyle(
                   color: Theme.of(context).primaryColor,
                 ),
               ),
               Text(
-                user.email,
+                widget.user.email,
                 style: TextStyle(
                   color: Theme.of(context).primaryColor,
                 ),
               ),
               Text(
-                user.birthDate.toString(),
+                widget.user.birthDate.toString(),
                 style: TextStyle(
                   color: Theme.of(context).primaryColor
                 ),
               ),
               FlatButton(
-                  onPressed: PurchasesList(),
+                  onPressed:
                   child: Text(
                     AppLocalizations.of(context).translate("purchases").capitalize
                   )),
@@ -87,6 +82,10 @@ class _AccountState extends State<Account> {
         ],
       ),
     );
+  }
+
+  User getLoggedUser(){
+    return widget.user;
   }
 
 }

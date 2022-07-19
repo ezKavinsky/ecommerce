@@ -9,6 +9,7 @@ import '../../model/objects/Cart.dart';
 import '../../model/objects/Product.dart';
 import '../../model/objects/Review.dart';
 import 'Account.dart';
+import 'CartPage.dart';
 import 'ReviewPage.dart';
 
 class ProductPage extends StatefulWidget{
@@ -113,7 +114,7 @@ class _ProductPageState extends State<ProductPage>{
                         CircularIconButton(
                           icon: Icons.add_shopping_cart,
                           onPressed: () {
-                            _addToCart(widget.product.id.toString(), int.parse(_quantityController.text);
+                            _addToCart(widget.product.id.toString(), int.parse(_quantityController.text));
                           }
                         )
                       ],

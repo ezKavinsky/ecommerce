@@ -133,7 +133,7 @@ class Model {
 
   Future<Review> getReview(String id1, String id2) async {
     try{
-      return Review.fromJson(json.decode(await _restManager.makeGetRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_PRODUCT + id1 + Constants.REQUEST_REVIEWS + id2)))
+      return Review.fromJson(json.decode(await _restManager.makeGetRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_PRODUCT + id1 + Constants.REQUEST_REVIEWS + id2)));
     }catch(e){
       return null;
     }
@@ -223,6 +223,19 @@ class Model {
   Future<Review> updateComment(String id1, String id2, String comment) async{
     try{
       return Review.fromJson(json.decode(await _restManager.makePutRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_PRODUCT + id2 + Constants.REQUEST_REVIEWS + id1, comment)));
+    }catch(e){
+      return null;
+    }
+  }
+
+  Future<User> getByEmail(String email) async {
+    try{
+      String rawResult = await _restManager.makeGetRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_USER_BY_EMAIL);
+      if(rawResult.contains(Constants.RESPONSE_ERROR_USER_NOT_FOUND)){
+        return null;
+      }else {
+        return User.fromJson(jsonDecode(rawResult));
+      }
     }catch(e){
       return null;
     }

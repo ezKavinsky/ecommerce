@@ -1,4 +1,5 @@
 import 'package:ecommerce/UI/behaviors/AppLocalizations.dart';
+import 'package:ecommerce/UI/pages/Account.dart';
 import 'package:ecommerce/UI/widgets/CircularIconButton.dart';
 import 'package:ecommerce/UI/widgets/InputField.dart';
 import 'package:ecommerce/model/Model.dart';
@@ -18,7 +19,7 @@ class UserRegistration extends StatefulWidget {
 
 class _UserRegistrationState extends State<UserRegistration> {
   bool _adding = false;
-  User _justAddedUser;
+  User _user;
   DateTime date;
 
   TextEditingController _codeFiledController = TextEditingController();
@@ -27,6 +28,7 @@ class _UserRegistrationState extends State<UserRegistration> {
   TextEditingController _telephoneNumberFiledController = TextEditingController();
   TextEditingController _emailFiledController = TextEditingController();
   TextEditingController _addressFiledController = TextEditingController();
+  TextEditingController _emailLoginFiledController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -98,12 +100,29 @@ class _UserRegistrationState extends State<UserRegistration> {
                       padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
                       child: _adding ?
                       CircularProgressIndicator() :
-                      _justAddedUser != null ?
+                      _user != null ?
                       Text(
-                          AppLocalizations.of(context).translate("just_added") + ":" + _justAddedUser.firstName + " " + _justAddedUser.lastName + "!"
+                          AppLocalizations.of(context).translate("just_added") + ":" + _user.firstName + " " + _user.lastName + "!"
                       ) :
                       SizedBox.shrink(),
                     ),
+                  ),
+                  Text(
+                    "OR",
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontSize: 50
+                    ),
+                  ),
+                  InputField(
+                    labelText: "Email",
+                    controller: _emailLoginFiledController,
+                  ),
+                  CircularIconButton(
+                    icon: Icons.login,
+                    onPressed: () {
+                      _login();
+                    },
                   ),
                 ],
               ),
@@ -117,7 +136,7 @@ class _UserRegistrationState extends State<UserRegistration> {
   void _register() {
     setState(() {
       _adding = true;
-      _justAddedUser = null;
+      _user = null;
     });
     User user = User(
       code: _codeFiledController.text,
@@ -131,7 +150,16 @@ class _UserRegistrationState extends State<UserRegistration> {
     Model.sharedInstance.addUser(user).then((result) {
       setState(() {
         _adding = false;
-        _justAddedUser = result;
+        _user = result;
+      });
+    });
+  }
+
+  void _login(){
+    Model.sharedInstance.getByEmail(_emailLoginFiledController.text).then((result) {
+      _user = result;
+      setState((){
+        Navigator.push(context, new MaterialPageRoute(builder: (context) => new Account(user: _user)));
       });
     });
   }
