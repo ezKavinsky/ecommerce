@@ -145,7 +145,7 @@ class _UserRegistrationState extends State<UserRegistration> {
       telephoneNumber: _telephoneNumberFiledController.text,
       email: _emailFiledController.text,
       address: _addressFiledController.text,
-      birthDate: date,
+      birthDate: date.toString(),
     );
     Model.sharedInstance.addUser(user).then((result) {
       setState(() {

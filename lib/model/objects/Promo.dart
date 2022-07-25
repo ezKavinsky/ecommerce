@@ -6,9 +6,8 @@ class Promo {
   int discount;
   String startDate;
   String endDate;
-  List<ProductInPromo> productsInPromo;
 
-  Promo({this.id, this.name, this.discount, this.startDate, this.endDate, this.productsInPromo});
+  Promo({this.id, this.name, this.discount, this.startDate, this.endDate});
 
   factory Promo.fromJson(Map<String, dynamic> json) {
     List<ProductInPromo> productsInPromo = List();
@@ -21,7 +20,6 @@ class Promo {
         discount: json['discount'],
         startDate: json['startDate'],
         endDate: json['endDate'],
-        productsInPromo: productsInPromo
     );
   }
 
@@ -31,7 +29,6 @@ class Promo {
     'discount': discount,
     'startDate': startDate,
     'endDate': endDate,
-    'productsInPromo': productsInPromo.map((e) => e.toJson()).toList()
   };
 
   @override

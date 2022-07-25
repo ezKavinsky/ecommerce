@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../model/Model.dart';
 import '../../model/objects/ProductInPromo.dart';
 import '../../model/objects/Promo.dart';
 import '../widgets/CircularIconButton.dart';
@@ -16,6 +17,18 @@ class PromoPage extends StatefulWidget{
 }
 
 class _PromoPageState extends State<PromoPage> {
+  List<ProductInPromo> _productsInPromo = null;
+
+  @override
+  void initState(){
+    super.initState();
+    Model.sharedInstance.getProductsInPromo(widget.promo.id.toString()).then((result){
+      setState((){
+        _productsInPromo = result;
+      });
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -92,15 +105,15 @@ class _PromoPageState extends State<PromoPage> {
                 Expanded(
                   child: Container(
                     child: ListView.builder(
-                      itemCount: widget.promo.productsInPromo.length,
+                      itemCount: _productsInPromo.length,
                       itemBuilder: (context, index) {
                         return GestureDetector(
                           child: ProductInPromoCard(
-                            productInPromo: widget.promo.productsInPromo[index],
+                            productInPromo: _productsInPromo[index],
                           ),
                           onTap: () =>
                               _getProductInPromo(
-                                  widget.promo.productsInPromo[index]),
+                                  _productsInPromo[index]),
                         );
                       },
                     ),

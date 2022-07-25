@@ -1,3 +1,4 @@
+import 'package:ecommerce/UI/widgets/CircularIconButton.dart';
 import 'package:flutter/material.dart';
 import '../../model/Model.dart';
 import '../../model/objects/Promo.dart';
@@ -14,19 +15,46 @@ class Promoting extends StatefulWidget {
 
 class _PromotingState extends State<Promoting> {
   List<Promo> _promos;
+  bool _loading = true;
 
-  @override
-  void initState(){
-    super.initState();
-    _getPromos();
-  }
-
-  void _getPromos() {
+  bool _getPromos() {
+    setState(() {
+      _promos = null;
+    });
     Model.sharedInstance.showPromos().then((result) {
       setState((){
        _promos = result;
+       _loading = false;
       });
     });
+    return _loading;
+  }
+
+  Widget _showPromos(){
+    _loading = _getPromos();
+    if(!_loading){
+      return Padding(
+          padding: EdgeInsets.fromLTRB(0, 10, 10, 0),
+          child: SizedBox.shrink(
+            child: Container(
+              child: ListView.builder(
+                itemCount: _promos.length,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    child: PromoCard(
+                      promo: _promos[index],
+                    ),
+                    onTap: () => _getPromo(_promos[index]),
+                  );
+                },
+              ),
+            ),
+          )
+      );
+    }
+    return CircularIconButton(
+      icon: Icons.home_rounded,
+    );
   }
 
   @override
@@ -46,24 +74,7 @@ class _PromotingState extends State<Promoting> {
                     ),
                   ),
                 ),
-                  Padding(
-                      padding: EdgeInsets.fromLTRB(0, 10, 10, 0),
-                      child: SizedBox.shrink(
-                        child: Container(
-                          child: ListView.builder(
-                            itemCount: _promos.length,
-                            itemBuilder: (context, index) {
-                              return GestureDetector(
-                                child: PromoCard(
-                                  promo: _promos[index],
-                                ),
-                                onTap: () => _getPromo(_promos[index]),
-                              );
-                            },
-                          ),
-                        ),
-                      )
-                  )
+                  _showPromos()
           ]
     )
     )

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../../model/objects/Cart.dart';
 import '../../model/objects/ProductInPromo.dart';
+import '../../model/objects/Promo.dart';
 import '../../model/objects/Review.dart';
 import 'Account.dart';
 import 'CartPage.dart';
@@ -22,14 +23,18 @@ class ProductInPromoPage extends StatefulWidget{
 
 class _ProductInPromoPageState extends State<ProductInPromoPage>{
   TextEditingController _quantityController = TextEditingController();
-  List<Review> _reviews;
-  Review _review;
-  Cart _cart;
+  List<Review> _reviews = null;
+  Review _review = null;
+  Cart _cart = null;
 
   @override
   void initState(){
     super.initState();
-    _getReviews(widget.productInPromo.product.id.toString());
+    Model.sharedInstance.getReviews(widget.productInPromo.product.id.toString()).then((result){
+      setState((){
+        _reviews = result;
+      });
+    });
   }
 
   @override
@@ -208,17 +213,6 @@ class _ProductInPromoPageState extends State<ProductInPromoPage>{
     Model.sharedInstance.addProductInPromoToCart(id1, id2, _cart.id.toString(), quantity).then((result) {
       setState((){
         Navigator.push(context, new MaterialPageRoute(builder: (context) => new CartPage(cart : _cart)));
-      });
-    });
-  }
-
-  void _getReviews(String id){
-    setState((){
-      _reviews = null;
-    });
-    Model.sharedInstance.getReviews(id).then((result){
-      setState((){
-        _reviews = result;
       });
     });
   }

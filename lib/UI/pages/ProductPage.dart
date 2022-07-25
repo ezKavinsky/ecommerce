@@ -22,14 +22,18 @@ class ProductPage extends StatefulWidget{
 
 class _ProductPageState extends State<ProductPage>{
   TextEditingController _quantityController = TextEditingController();
-  List<Review> _reviews;
-  Cart _cart;
-  Review _review;
+  List<Review> _reviews = null;
+  Cart _cart = null;
+  Review _review = null;
 
   @override
   void initState(){
     super.initState();
-    _getReviews(widget.product.id.toString());
+    Model.sharedInstance.getReviews(widget.product.id.toString()).then((result){
+      setState((){
+        _reviews = result;
+      });
+    });
   }
 
   @override
@@ -211,17 +215,6 @@ class _ProductPageState extends State<ProductPage>{
       });
     });
 
-  }
-
-  void _getReviews(String id){
-    setState((){
-      _reviews = null;
-    });
-    Model.sharedInstance.getReviews(id).then((result){
-      setState((){
-        _reviews = result;
-      });
-    });
   }
 
   void _getReview(String id1, String id2){

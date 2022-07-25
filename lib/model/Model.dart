@@ -3,12 +3,15 @@ import 'dart:convert';
 import 'package:ecommerce/model/managers/RestManager.dart';
 import 'package:ecommerce/model/objects/AuthenticationData.dart';
 import 'package:ecommerce/model/objects/Product.dart';
+import 'package:ecommerce/model/objects/ProductInPurchase.dart';
 import 'package:ecommerce/model/objects/Promo.dart';
 import 'package:ecommerce/model/objects/User.dart';
 import 'package:ecommerce/model/support/Constants.dart';
 import 'package:ecommerce/model/support/LogInResult.dart';
 import 'objects/Cart.dart';
+import 'objects/ProductInCart.dart';
 import 'objects/ProductInPromo.dart';
+import 'objects/ProductInPromoInCart.dart';
 import 'objects/Purchase.dart';
 import 'objects/Review.dart';
 
@@ -88,6 +91,8 @@ class Model {
     Map<String, String> params = Map();
     params["name"] = name;
     try {
+      var response = await _restManager.makeGetRequestParam(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_SEARCH_PRODUCTS, params);
+      print(response);
       return List<Product>.from(json.decode(await _restManager.makeGetRequestParam(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_SEARCH_PRODUCTS, params)).map((i) => Product.fromJson(i)).toList()) ;
     }
     catch (e) {
@@ -294,6 +299,50 @@ class Model {
     try{
       return User.fromJson(json.decode(await _restManager.makePutRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_ADD_USER + id, address)));
     }catch(e){
+      return null;
+    }
+  }
+
+  Future<List<Purchase>> getPurchases(String id) async{
+    try{
+      return List<Purchase>.from(json.decode(await _restManager.makeGetRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_ADD_USER + id + Constants.REQUEST_PURCHASES)));
+    }catch(e){
+      return null;
+    }
+  }
+
+  Future<List<Review>> getReviewsByUser(String id) async{
+    try{
+      return List<Review>.from(json.decode(await _restManager.makeGetRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_ADD_USER + id + Constants.REQUEST_REVIEWS)));
+    }catch(e){
+      return null;
+    }
+  }
+
+  Future<List<ProductInCart>> getProducts(String id) async{
+    try{
+      return List<ProductInCart>.from(json.decode(await _restManager.makeGetRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_ADD_USER + id + Constants.REQUEST_PRODUCTS_IN_CART)).map((i) => ProductInCart.fromJson(i)).toList());
+    }catch(e) {
+      return null;
+    }
+  }
+
+  Future<List<ProductInPromoInCart>> getProductsInPromoInCart(String id) async{
+    try{
+      return List<ProductInPromoInCart>.from(json.decode(await _restManager.makeGetRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_ADD_USER + id + Constants.REQUEST_PRODUCTS_IN_PROMO_IN_CART)).map((i) => ProductInPromoInCart.fromJson(i)).toList());
+    }catch(e) {
+      return null;
+    }
+  }
+
+  Future<List<ProductInPurchase>> getProductsInPurchase(String id) async{
+
+  }
+
+  Future<List<ProductInPromo>> getProductsInPromo(String id) async{
+    try{
+      return List<ProductInPromo>.from(json.decode(await _restManager.makeGetRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_PROMOS + id + Constants.REQUEST_PRODUCT)).map((i) => ProductInPromoInCart.fromJson(i)).toList());
+    }catch(e) {
       return null;
     }
   }

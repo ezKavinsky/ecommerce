@@ -1,7 +1,11 @@
 import 'package:ecommerce/model/Model.dart';
 import 'package:flutter/material.dart';
+import '../../model/objects/Cart.dart';
+import '../../model/objects/Purchase.dart';
+import '../../model/objects/Review.dart';
 import '../../model/objects/User.dart';
 import 'PurchasesPage.dart';
+import 'ReviewsPage.dart';
 
 class Account extends StatefulWidget {
   Account({Key key, this.user}) : super(key: key);
@@ -18,6 +22,8 @@ class Account extends StatefulWidget {
 
 class _AccountState extends State<Account> {
   bool _editable;
+  List<Purchase> _purchases = null;
+  List<Review> _reviews = null;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +31,7 @@ class _AccountState extends State<Account> {
       body: Column(
         children: [
           Align(
-              alignment: Alignment.bottomRight,
+              alignment: Alignment.bottomLeft,
               child: ElevatedButton(
                   child: Icon(Icons.edit),
                   onPressed: () {
@@ -38,7 +44,16 @@ class _AccountState extends State<Account> {
               child: ElevatedButton(
                   child: Icon(Icons.shopify_sharp),
                   onPressed: () {
-                    _purchases(widget.user.id.toString());
+                    _getPurchases(widget.user.id.toString());
+                  }
+              )
+          ),
+          Align(
+              alignment: Alignment.bottomCenter,
+              child: ElevatedButton(
+                  child: Icon(Icons.reviews),
+                  onPressed: () {
+                    _getReviews(widget.user.id.toString());
                   }
               )
           ),
@@ -200,9 +215,21 @@ class _AccountState extends State<Account> {
     });
   }
 
-  void _purchases(String id){
+  void _getPurchases(String id){
+    Model.sharedInstance.getPurchases(id).then((result) {
+      _purchases = result;
+    });
     setState((){
-      Navigator.push(context, new MaterialPageRoute(builder: (context) => new PurchasesPage(purchases: widget.user.purchases)));
+      Navigator.push(context, new MaterialPageRoute(builder: (context) => new PurchasesPage(purchases: _purchases)));
+    });
+  }
+
+  void _getReviews(String id){
+    Model.sharedInstance.getReviewsByUser(id).then((result) {
+      _reviews = result;
+    });
+    setState((){
+      Navigator.push(context, new MaterialPageRoute(builder: (context) => new ReviewsPage(reviews: _reviews)));
     });
   }
 

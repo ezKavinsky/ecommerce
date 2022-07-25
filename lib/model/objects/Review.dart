@@ -6,10 +6,10 @@ class Review {
   String title;
   String comment;
   double stars;
-  Product product;
   User buyer;
+  Product product;
 
-  Review({this.id, this.title, this.comment, this.stars, this.product, this.buyer});
+  Review({this.id, this.title, this.comment, this.stars, this.buyer, this.product});
 
   factory Review.fromJson(Map<String, dynamic> json) {
     return Review(
@@ -17,8 +17,8 @@ class Review {
         title: json['title'],
         comment: json['comment'],
         stars: json['stars'],
-        product: Product.fromJson(json['product']),
-        buyer: User.fromJson(json['buyer'])
+        buyer: User.fromJson(json['buyer']),
+        product: Product.fromJson(json['product'])
     );
   }
 
@@ -26,9 +26,9 @@ class Review {
     'id': id,
     'title': title,
     'comment': comment,
-    'stars': stars,
-    'product': product.toJson(),
-    'buyer': buyer.toJson()
+    'stars' : stars,
+    'buyer' : buyer,
+    'product' : product
   };
 
   @override

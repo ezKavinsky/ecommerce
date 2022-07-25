@@ -5,9 +5,7 @@ import 'package:ecommerce/model/objects/Purchase.dart';
 import 'package:flutter/material.dart';
 import '../../model/objects/Cart.dart';
 import '../../model/objects/Product.dart';
-import '../../model/objects/ProductInCart.dart';
 import '../../model/objects/ProductInPromo.dart';
-import '../../model/objects/ProductInPromoInCart.dart';
 import '../widgets/ProductInCartCard.dart';
 import '../widgets/ProductInPromoInCartCard.dart';
 import 'ProductInPromoPage.dart';
@@ -24,18 +22,9 @@ class CartPage extends StatefulWidget{
 }
 
 class _CartPageState extends State<CartPage>{
-  List<ProductInCart> _products;
-  List<ProductInPromoInCart> _productsInPromo;
-  Purchase _purchase;
+  Purchase _purchase = null;
   TextEditingController _quantityProductController = TextEditingController();
   TextEditingController _quantityProductInPromoController = TextEditingController();
-
-  @override
-  void initState(){
-    super.initState();
-    _products = widget.cart.products;
-    _productsInPromo = widget.cart.productsInPromo;
-  }
 
   @override
   Widget build(BuildContext context){
@@ -71,24 +60,24 @@ class _CartPageState extends State<CartPage>{
                       ),
                     ),
                 Expanded(
-                        child: _products.length <= 0 ? Text("Empty") : Container(
+                        child: widget.cart.products.length <= 0 ? Text("Empty") : Container(
                           child: ListView.builder(
-                            itemCount: _products.length,
+                            itemCount: widget.cart.products.length,
                             itemBuilder: (context, index) {
                               return Column(
                                   children: [
                                     GestureDetector(
                                       child: ProductInCartCard(
-                                        productInCart: _products[index],
+                                        productInCart: widget.cart.products[index],
                                       ),
-                                      onTap: () => _getProduct(_products[index].product),
+                                      onTap: () => _getProduct(widget.cart.products[index].product),
                                     ),
                                     Row(
                                       children: [
                                         CircularIconButton(
                                           icon: Icons.remove_shopping_cart_outlined,
                                           onPressed: () {
-                                            _removeProduct(widget.cart.buyer.id.toString(), _products[index].id.toString());
+                                            _removeProduct(widget.cart.id.toString(), widget.cart.products[index].id.toString());
                                           },
                                         ),
                                         Row(
@@ -97,7 +86,7 @@ class _CartPageState extends State<CartPage>{
                                               icon: Icons.add,
                                               onPressed: () {
                                                 int quantity = int.parse(_quantityProductController.text);
-                                                _updateQuantityProduct(widget.cart.id.toString(), _products[index].id.toString(), quantity);
+                                                _updateQuantityProduct(widget.cart.id.toString(), widget.cart.products[index].id.toString(), quantity);
                                               },
                                             ),
                                             InputField(
@@ -108,7 +97,7 @@ class _CartPageState extends State<CartPage>{
                                               icon: Icons.remove,
                                               onPressed: () {
                                                 int quantity = -int.parse(_quantityProductController.text);
-                                                _updateQuantityProduct(widget.cart.id.toString(), _products[index].id.toString(), quantity);
+                                                _updateQuantityProduct(widget.cart.id.toString(), widget.cart.products[index].id.toString(), quantity);
                                               },
                                             ),
                                           ],
@@ -130,24 +119,24 @@ class _CartPageState extends State<CartPage>{
                       ),
                     ),
                 Expanded(
-                        child: _productsInPromo.length <= 0 ? Text("Empty") : Container(
+                        child: widget.cart.productsInPromo.length <= 0 ? Text("Empty") : Container(
                           child: ListView.builder(
-                            itemCount: _productsInPromo.length,
+                            itemCount: widget.cart.productsInPromo.length,
                             itemBuilder: (context, index) {
                               return Column(
                                 children: [
                               GestureDetector(
                               child: ProductInPromoInCartCard(
-                              productInPromoInCart: _productsInPromo[index],
+                              productInPromoInCart: widget.cart.productsInPromo[index],
                               ),
-                              onTap: () => _getProductInPromo(_productsInPromo[index].productInPromo),
+                              onTap: () => _getProductInPromo(widget.cart.productsInPromo[index].productInPromo),
                               ),
                                   Row(
                                     children: [
                                       CircularIconButton(
                                         icon: Icons.remove_shopping_cart_outlined,
                                         onPressed: () {
-                                          _removeProductInPromo(widget.cart.buyer.id.toString(), _productsInPromo[index].id.toString());
+                                          _removeProductInPromo(widget.cart.id.toString(), widget.cart.productsInPromo[index].id.toString());
                                         },
                                       ),
                                       Row(
@@ -156,7 +145,7 @@ class _CartPageState extends State<CartPage>{
                                             icon: Icons.add,
                                             onPressed: () {
                                               int quantity = int.parse(_quantityProductInPromoController.text);
-                                              _updateQuantityProductInPromo(widget.cart.id.toString(), _productsInPromo[index].id.toString(), quantity);
+                                              _updateQuantityProductInPromo(widget.cart.id.toString(), widget.cart.productsInPromo[index].id.toString(), quantity);
                                             },
                                           ),
                                           InputField(
@@ -167,7 +156,7 @@ class _CartPageState extends State<CartPage>{
                                             icon: Icons.remove,
                                             onPressed: () {
                                               int quantity = -int.parse(_quantityProductInPromoController.text);
-                                              _updateQuantityProduct(widget.cart.id.toString(), _products[index].id.toString(), quantity);
+                                              _updateQuantityProduct(widget.cart.id.toString(), widget.cart.productsInPromo[index].id.toString(), quantity);
                                             },
                                           ),
                                         ],
@@ -187,7 +176,7 @@ class _CartPageState extends State<CartPage>{
                       child: CircularIconButton(
                           icon: Icons.remove_shopping_cart,
                           onPressed: () {
-                            _clear(widget.cart.buyer.id.toString());
+                            _clear(widget.cart.id.toString());
                           }
                       ),
                     ),
@@ -196,7 +185,7 @@ class _CartPageState extends State<CartPage>{
                       child: CircularIconButton(
                           icon: Icons.shopping_cart_checkout,
                           onPressed: () {
-                            _makePurchase(widget.cart.buyer.id.toString());
+                            _makePurchase(widget.cart.id.toString());
                           }
                       ),
                     )

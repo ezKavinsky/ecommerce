@@ -14,16 +14,18 @@ class Constants {
   static final String REQUEST_LOGOUT = "realms/" + REALM + "/protocol/openid-connect/logout";
 
   // requests
-  static final String REQUEST_SEARCH_PRODUCTS = "/products/search/by_name";
+  static final String REQUEST_SEARCH_PRODUCTS = "/products/search/by_name/";
   static final String REQUEST_ADD_USER = "/users/";
   static final String REQUEST_PROMOS = "/promos/";
   static final String REQUEST_PRODUCT= "/products/";
   static final String REQUEST_ADD_PRODUCT_IN_CART = "/cart/purchase/";
   static final String REQUEST_REVIEWS = "/reviews/";
   static final String REQUEST_PRODUCTS_IN_PROMO = "/productsInPromo/";
-  static final String REQUEST_CLEAR_CART = "/cart/clear";
-  static final String REQUEST_PRODUCTS_IN_CART= "/cart/products";
-  static final String REQUEST_USER_BY_EMAIL=" /users/getByEmail";
+  static final String REQUEST_CLEAR_CART = "/cart/clear/";
+  static final String REQUEST_PRODUCTS_IN_CART= "/cart/products/";
+  static final String REQUEST_PRODUCTS_IN_PROMO_IN_CART= "/cart/productsInPromo/";
+  static final String REQUEST_USER_BY_EMAIL=" /users/getByEmail/";
+  static final String REQUEST_PURCHASES = "/purchases/";
 
 
   // states
