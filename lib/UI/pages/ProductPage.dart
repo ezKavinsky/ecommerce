@@ -39,20 +39,14 @@ class _ProductPageState extends State<ProductPage>{
   @override
   Widget build(BuildContext context){
     return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.product.name),
+      ),
       body: Padding(
         padding: EdgeInsets.fromLTRB(0, 10, 10, 0),
         child: Center(
-          child: Column(
+          child: Expanded(child: Column(
             children: [
-              Align(
-                alignment: Alignment.topLeft,
-                child:  CircularIconButton(
-                  icon: Icons.arrow_back,
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
               Text(
                 widget.product.brand,
                 style: TextStyle(
@@ -78,40 +72,36 @@ class _ProductPageState extends State<ProductPage>{
                 ),
                 textAlign: TextAlign.center,
               ),
-              Row(
-                children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Column(
-                      children: [
-                        Text(
-                          widget.product.price.toString(),
-                          style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 30
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                        Text(
-                          widget.product.quantity.toString(),
-                          style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 15
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
-                  ),
-                    Column(
+              Text(
+                widget.product.price.toString() + "€",
+                style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontSize: 30
+                ),
+                textAlign: TextAlign.center,
+              ),
+              Text(
+                "Quantity = " + widget.product.quantity.toString(),
+                style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontSize: 15
+                ),
+                textAlign: TextAlign.center,
+              ),
+              Text(
+                "Shipping = " + widget.product.shippingPrice.toString(),
+                style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontSize: 15
+                ),
+                textAlign: TextAlign.center,
+              ),
+              Expanded(child: Column(
                       children: [
                         Flexible(
                             child: InputField(
                               labelText: "Quantity to buy",
                               controller: _quantityController,
-                              onSubmit: () {
-                                _addToCart(widget.product.id.toString(), int.parse(_quantityController.text));
-                              },
                             ),
                         ),
                         CircularIconButton(
@@ -122,40 +112,25 @@ class _ProductPageState extends State<ProductPage>{
                         )
                       ],
                     )
-                ],
-              ),
+                    ),
+
               Align(
                 alignment: Alignment.center,
-                child: Row(
-                  children: [
-                    Text(
-                      widget.product.freeShipping ? "Yes" : Text(
-                        widget.product.shippingPrice.toString(),
-                        style: TextStyle(
-                            color: Theme.of(context).primaryColor,
-                            fontSize: 30
+                    child: SizedBox(
+                      height: 40,
+                      child: RatingBarIndicator(
+                        rating: widget.product.score,
+                        itemBuilder: (context,index) => Icon(
+                          Icons.star,
+                          color: Colors.amber,
                         ),
-                        textAlign: TextAlign.center,
+                        itemCount: 5,
+                        itemSize: 50.0,
+                        direction: Axis.horizontal,
                       ),
-                      style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 30
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    RatingBarIndicator(
-                      rating: widget.product.score,
-                      itemBuilder: (context,index) => Icon(
-                        Icons.star,
-                        color: Colors.amber,
-                      ),
-                      itemCount: 5,
-                      itemSize: 50.0,
-                      direction: Axis.horizontal,
-                    ),
-                  ],
+                    )
+
                 ),
-              ),
               Text(
                 widget.product.productionYear.toString(),
                 style: TextStyle(
@@ -172,7 +147,8 @@ class _ProductPageState extends State<ProductPage>{
                 ),
                 textAlign: TextAlign.center,
               ),
-             Column(
+
+              Expanded(child: Column(
                children: [
                  Text(
                    "Reviews",
@@ -199,10 +175,12 @@ class _ProductPageState extends State<ProductPage>{
                  ),
                ],
              )
+              )
               ],
           ),
         ),
       ),
+      )
     );
   }
 

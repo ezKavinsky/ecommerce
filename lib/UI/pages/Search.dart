@@ -20,7 +20,6 @@ class Search extends StatefulWidget {
 class _SearchState extends State<Search> {
   bool _searching = false;
   List<Product> _products;
-  Product _product;
 
   TextEditingController _searchFiledController = TextEditingController();
 
@@ -118,7 +117,7 @@ class _SearchState extends State<Search> {
 
   void _getProduct(Product product) {
     setState(() {
-      Navigator.push(context, new MaterialPageRoute(builder: (context) => new ProductPage(product:_product)));
+      Navigator.push(context, new MaterialPageRoute(builder: (context) => new ProductPage(product: product)));
     });
   }
 }

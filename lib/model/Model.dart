@@ -165,10 +165,14 @@ class Model {
 
   Future<Product> getProduct(String id) async{
     try {
+      var response = await _restManager.makeGetRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_PRODUCT + id);
+      print(response);
       return Product.fromJson(json.decode(await _restManager.makeGetRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_PRODUCT + id)));
       }catch(e){
+      print("---QUI2--\n");
       print(e);
-        return null;
+      print("-----\n");
+      return null;
     }
   }
 
