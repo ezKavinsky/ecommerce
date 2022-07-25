@@ -17,20 +17,20 @@ class ProductInPromo {
   factory ProductInPromo.fromJson(Map<String, dynamic> json) {
     return ProductInPromo(
         id: json['id'],
-        promo: json['promo'],
-        product: json['product'],
-        productsInPromoPurchase: json['productsInPromoPurchase'],
-        productInPromoInCarts: json['productInPromoInCarts'],
+        promo: Promo.fromJson(json['promo']),
+        product: Product.fromJson(json['product']),
+        productsInPromoPurchase: ProductInPromoPurchase.fromJson(json['productInPromoPurchase']),
+        productInPromoInCarts: ProductInPromoInCart.fromJson(json['productInPromoInCarts']),
         discountPrice: json['discountPrice']
     );
   }
 
   Map<String, dynamic> toJson() => {
     'id': id,
-    'promo': promo,
-    'product': product,
-    'productsInPromoPurchase': productsInPromoPurchase,
-    'productsInPromoInCarts': productInPromoInCarts,
+    'promo': promo.toJson(),
+    'product': product.toJson(),
+    'productsInPromoPurchase': productsInPromoPurchase.toJson(),
+    'productsInPromoInCarts': productInPromoInCarts.toJson(),
     'discountPrice': discountPrice
   };
 

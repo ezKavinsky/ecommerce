@@ -88,7 +88,7 @@ class Model {
     Map<String, String> params = Map();
     params["name"] = name;
     try {
-      return List<Product>.from(json.decode(await _restManager.makeGetRequestParam(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_SEARCH_PRODUCTS, params)).map((i) => Product.fromJson(i)).toList());
+      return List<Product>.from(json.decode(await _restManager.makeGetRequestParam(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_SEARCH_PRODUCTS, params)).map((i) => Product.fromJson(i)).toList()) ;
     }
     catch (e) {
       return null; // not the best solution
@@ -147,8 +147,13 @@ class Model {
 
   Future<List<Promo>> showPromos() async{
     try{
+      var response = await _restManager.makeGetRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_PROMOS);
+      print(response);
       return List<Promo>.from(json.decode(await _restManager.makeGetRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_PROMOS)).map((i) => Promo.fromJson(i)).toList());
     }catch(e){
+      print("---QUI--\n");
+      print(e);
+      print("-----\n");
       return null;
     }
   }
@@ -157,6 +162,7 @@ class Model {
     try {
       return Product.fromJson(json.decode(await _restManager.makeGetRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_PRODUCT + id)));
       }catch(e){
+      print(e);
         return null;
     }
   }

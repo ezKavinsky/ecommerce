@@ -4,20 +4,24 @@ class Promo {
   int id;
   String name;
   int discount;
-  DateTime startDate;
-  DateTime endDate;
+  String startDate;
+  String endDate;
   List<ProductInPromo> productsInPromo;
 
   Promo({this.id, this.name, this.discount, this.startDate, this.endDate, this.productsInPromo});
 
   factory Promo.fromJson(Map<String, dynamic> json) {
+    List<ProductInPromo> productsInPromo = List();
+    for(Map<String, dynamic> rawProductInPromo in json['productsInPromo']){
+      productsInPromo.add(ProductInPromo.fromJson(rawProductInPromo));
+    }
     return Promo(
         id: json['id'],
         name: json['name'],
         discount: json['discount'],
         startDate: json['startDate'],
         endDate: json['endDate'],
-        productsInPromo: json['productsInPromo']
+        productsInPromo: productsInPromo
     );
   }
 
@@ -27,11 +31,12 @@ class Promo {
     'discount': discount,
     'startDate': startDate,
     'endDate': endDate,
-    'productsInPromo': productsInPromo
+    'productsInPromo': productsInPromo.map((e) => e.toJson()).toList()
   };
 
   @override
   String toString() {
     return name;
   }
+
 }//Product

@@ -13,18 +13,18 @@ class ProductInPurchase {
   factory ProductInPurchase.fromJson(Map<String, dynamic> json) {
     return ProductInPurchase(
         id: json['id'],
-        purchase: json['purchase'],
+        purchase: Purchase.fromJson(json['purchase']),
         quantity: json['quantity'],
         finalPrice: json['finalPrice'],
-        product: json['product']
+        product: Product.fromJson(json['product'])
     );
   }
 
   Map<String, dynamic> toJson() => {
     'id': id,
-    'purchase': purchase,
+    'purchase': purchase.toJson(),
     'quantity': quantity,
-    'product': product
+    'product': product.toJson()
   };
 
   @override

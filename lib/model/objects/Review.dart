@@ -17,8 +17,8 @@ class Review {
         title: json['title'],
         comment: json['comment'],
         stars: json['stars'],
-        product: json['product'],
-        buyer: json['buyer']
+        product: Product.fromJson(json['product']),
+        buyer: User.fromJson(json['buyer'])
     );
   }
 
@@ -27,8 +27,8 @@ class Review {
     'title': title,
     'comment': comment,
     'stars': stars,
-    'product': product,
-    'buyer': buyer,
+    'product': product.toJson(),
+    'buyer': buyer.toJson()
   };
 
   @override

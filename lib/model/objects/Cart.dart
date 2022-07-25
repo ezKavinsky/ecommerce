@@ -12,20 +12,28 @@ class Cart {
   Cart({this.id, this.buyer, this.products, this.productsInPromo, this.total});
 
   factory Cart.fromJson(Map<String, dynamic> json){
+    List<ProductInPromoInCart> productsInPromo = List();
+    for(Map<String, dynamic> rawProductInPromo in json['productsInPromo']){
+      productsInPromo.add(ProductInPromoInCart.fromJson(rawProductInPromo));
+    }
+    List<ProductInCart> products = List();
+    for(Map<String, dynamic> rawProduct in json['products']){
+      products.add(ProductInCart.fromJson(rawProduct));
+    }
     return Cart(
       id: json['id'],
-      buyer: json['buyer'],
-      products: json['products'],
-      productsInPromo: json['productsInPromo'],
+      buyer: User.fromJson(json['buyer']),
+      products: products,
+      productsInPromo: productsInPromo,
       total: json['total']
     );
   }
 
   Map<String, dynamic> toJson() => {
     'id': id,
-    'buyer': buyer,
-    'products': products,
-    'productsInPromo': productsInPromo,
+    'buyer': buyer.toJson(),
+    'products': products.map((e) => e.toJson()).toList(),
+    'productsInPromo': productsInPromo.map((e) => e.toJson()).toList(),
     'total': total
   };
 

@@ -24,7 +24,7 @@ class _PromotingState extends State<Promoting> {
   void _getPromos() {
     Model.sharedInstance.showPromos().then((result) {
       setState((){
-       print(result.length);
+       _promos = result;
       });
     });
   }
@@ -46,24 +46,24 @@ class _PromotingState extends State<Promoting> {
                     ),
                   ),
                 ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(0, 10, 10, 0),
-                child: SizedBox.shrink(
-                  child: Container(
-                child: ListView.builder(
-                itemCount: _promos.length,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      child: PromoCard(
-                        promo: _promos[index],
-                      ),
-                      onTap: () => _getPromo(_promos[index]),
-                    );
-                  },
-                ),
-              ),
-                )
-     )
+                  Padding(
+                      padding: EdgeInsets.fromLTRB(0, 10, 10, 0),
+                      child: SizedBox.shrink(
+                        child: Container(
+                          child: ListView.builder(
+                            itemCount: _promos.length,
+                            itemBuilder: (context, index) {
+                              return GestureDetector(
+                                child: PromoCard(
+                                  promo: _promos[index],
+                                ),
+                                onTap: () => _getPromo(_promos[index]),
+                              );
+                            },
+                          ),
+                        ),
+                      )
+                  )
           ]
     )
     )
@@ -76,7 +76,5 @@ class _PromotingState extends State<Promoting> {
       Navigator.push(context, new MaterialPageRoute(builder: (context) => new PromoPage(promo: promo)));
     });
   }
-
-
 
 }

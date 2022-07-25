@@ -108,7 +108,7 @@ class _UserRegistrationState extends State<UserRegistration> {
                     ),
                   ),
                   Text(
-                    "OR",
+                    "Login",
                     style: TextStyle(
                       color: Theme.of(context).primaryColor,
                       fontSize: 50
