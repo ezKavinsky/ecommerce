@@ -33,75 +33,76 @@ class _PromoPageState extends State<PromoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(0, 10, 10, 0),
-        child: Center(
-            child: Column(
+      body: Center(
+              child: Column(
               children: [
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: CircularIconButton(
-                    icon: Icons.arrow_back,
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                ),
-                Text(
-                  widget.promo.name,
-                  style: TextStyle(
-                      color: Theme
-                          .of(context)
-                          .primaryColor,
-                      fontStyle: FontStyle.italic,
-                      fontSize: 50
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                Row(
-                  children: [
-                    Text(
-                      widget.promo.startDate.toString(),
-                      style: TextStyle(
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 10, 10, 10),
+                  child: Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: CircularIconButton(
+                          icon: Icons.arrow_back,
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ),
+                      Text(
+                        widget.promo.name,
+                        style: TextStyle(
+                            color: Theme
+                                .of(context)
+                                .primaryColor,
+                            fontStyle: FontStyle.italic,
+                            fontSize: 50
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                          Text(
+                            "Start date : " + widget.promo.startDate.toString(),
+                            style: TextStyle(
+                                color: Theme
+                                    .of(context)
+                                    .primaryColor,
+                                fontSize: 30
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
+                          Text(
+                            "End date : " + widget.promo.endDate.toString(),
+                            style: TextStyle(
+                                color: Theme
+                                    .of(context)
+                                    .primaryColor,
+                                fontSize: 30
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          Text(
+                            "Discount : " + widget.promo.discount.toString() + "%",
+                            style: TextStyle(
+                                color: Theme
+                                    .of(context)
+                                    .primaryColor,
+                                fontSize: 30
+                            ),
+                            textAlign: TextAlign.right,
+                          ),
+                        ],
+                      ),
+                      ),
+                      Text(
+                        "Products",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
                           color: Theme
                               .of(context)
                               .primaryColor,
-                          fontSize: 30
+                          fontSize: 30,
+                        ),
                       ),
-                      textAlign: TextAlign.left,
-                    ),
-                    Text(
-                      widget.promo.endDate.toString(),
-                      style: TextStyle(
-                          color: Theme
-                              .of(context)
-                              .primaryColor,
-                          fontSize: 30
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    Text(
-                      widget.promo.discount.toString() + "%",
-                      style: TextStyle(
-                          color: Theme
-                              .of(context)
-                              .primaryColor,
-                          fontSize: 30
-                      ),
-                      textAlign: TextAlign.right,
-                    ),
-                  ],
-                ),
-                Text(
-                  "Products",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Theme
-                        .of(context)
-                        .primaryColor,
-                    fontSize: 30,
-                  ),
-                ),
                 Expanded(
                   child: Container(
                     child: ListView.builder(
@@ -122,7 +123,6 @@ class _PromoPageState extends State<PromoPage> {
               ],
             )
         ),
-      ),
     );
   }
 

@@ -29,8 +29,7 @@ class _PromotingState extends State<Promoting> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Center(
+      body: Center(
             child : Column(
                 children: [
                   Padding(
@@ -43,9 +42,7 @@ class _PromotingState extends State<Promoting> {
                     ),
                   ),
                 ),
-          Padding(
-              padding: EdgeInsets.fromLTRB(0, 10, 10, 0),
-              child: SizedBox.shrink(
+              Expanded(
                 child: Container(
                   child: ListView.builder(
                     itemCount: _promos.length,
@@ -60,12 +57,10 @@ class _PromotingState extends State<Promoting> {
                   ),
                 ),
               )
-          )
           ]
     )
-    )
-    )
-      );
+      )
+    );
   }
 
   void _getPromo(Promo promo){

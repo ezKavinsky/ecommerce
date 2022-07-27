@@ -39,14 +39,20 @@ class _ProductPageState extends State<ProductPage>{
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.product.name),
-      ),
       body: Padding(
         padding: EdgeInsets.fromLTRB(0, 10, 10, 0),
         child: Center(
-          child: Expanded(child: Column(
+          child: Column(
             children: [
+              Align(
+                alignment: Alignment.topLeft,
+                child:  CircularIconButton(
+                  icon: Icons.arrow_back,
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ),
               Text(
                 widget.product.brand,
                 style: TextStyle(
@@ -180,8 +186,7 @@ class _ProductPageState extends State<ProductPage>{
           ),
         ),
       ),
-      )
-    );
+      );
   }
 
   void _addToCart(String id, int quantity){

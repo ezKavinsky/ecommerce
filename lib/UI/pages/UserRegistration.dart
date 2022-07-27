@@ -121,7 +121,7 @@ class _UserRegistrationState extends State<UserRegistration> {
                   CircularIconButton(
                     icon: Icons.login,
                     onPressed: () {
-                      _login();
+                      _login(_emailLoginFiledController.text);
                     },
                   ),
                 ],
@@ -155,8 +155,8 @@ class _UserRegistrationState extends State<UserRegistration> {
     });
   }
 
-  void _login(){
-    Model.sharedInstance.getByEmail(_emailLoginFiledController.text).then((result) {
+  void _login(String email){
+    Model.sharedInstance.getByEmail(email).then((result) {
       _user = result;
       setState((){
         Navigator.push(context, new MaterialPageRoute(builder: (context) => new Account(user: _user)));

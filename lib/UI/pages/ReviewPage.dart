@@ -14,7 +14,7 @@ class ReviewPage extends StatefulWidget{
 }
 
 class _ReviewPageState extends State<ReviewPage>{
-  bool _editable;
+  bool _editable = false;
 
   @override
   Widget build(BuildContext context){
@@ -22,7 +22,6 @@ class _ReviewPageState extends State<ReviewPage>{
       body: Padding(
         padding: EdgeInsets.fromLTRB(0, 10, 10, 0),
         child: Column(
-
           children: [
             Align(
               alignment: Alignment.topLeft,
@@ -32,8 +31,9 @@ class _ReviewPageState extends State<ReviewPage>{
                     Navigator.pop(context);
                   },
                 ),
-              ),
-            Expanded(
+              ),Container(
+                  padding: EdgeInsets.fromLTRB(20, 0 , 20, 20),
+                  child: Expanded(
               child: Column(
                 children: [
                   Align(
@@ -64,6 +64,7 @@ class _ReviewPageState extends State<ReviewPage>{
                         ),
                       ),
                       TextField(
+                        textAlign: TextAlign.center,
                         enabled: _editable,
                           decoration: InputDecoration(
                             labelText: widget.review.comment,
@@ -73,6 +74,7 @@ class _ReviewPageState extends State<ReviewPage>{
                           },
                           style: TextStyle(
                               color: Theme.of(context).primaryColor,
+
                               fontSize: 30
                           )
                           )
@@ -82,8 +84,9 @@ class _ReviewPageState extends State<ReviewPage>{
                   ],
                 ),
             ),
+            ),
             Align(
-              alignment: Alignment.bottomRight,
+              alignment: Alignment.centerRight,
               child: ElevatedButton(
                 child: Icon(Icons.edit),
                 onPressed: () {

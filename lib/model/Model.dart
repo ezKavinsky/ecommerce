@@ -134,8 +134,13 @@ class Model {
 
   Future<List<Review>> getReviews(String id) async {
     try{
+      var response = await _restManager.makeGetRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_PRODUCT + id + Constants.REQUEST_REVIEWS);
+      print(response);
       return List<Review>.from(json.decode(await _restManager.makeGetRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_PRODUCT + id + Constants.REQUEST_REVIEWS)).map((i) => Review.fromJson(i)).toList());
     }catch(e){
+      print("---QUI3--\n");
+      print(e);
+      print("-----\n");
       return null;
     }
   }
@@ -241,15 +246,18 @@ class Model {
 
   Future<Review> updateComment(String id1, String id2, String comment) async{
     try{
-      return Review.fromJson(json.decode(await _restManager.makePutRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_PRODUCT + id2 + Constants.REQUEST_REVIEWS + id1, comment)));
+      return Review.fromJson(json.decode(await _restManager.makePutRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_PRODUCT + id2 + Constants.REQUEST_REVIEWS + id1 + Constants.REQUEST_UPDATE_COMMENT, comment)));
     }catch(e){
       return null;
     }
   }
 
   Future<User> getByEmail(String email) async {
+    Map<String, String> params = Map();
+    params["email"] = email;
     try{
-      String rawResult = await _restManager.makeGetRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_USER_BY_EMAIL);
+      String rawResult = await _restManager.makeGetRequestParam(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_USER_BY_EMAIL, params);
+      print(rawResult);
       if(rawResult.contains(Constants.RESPONSE_ERROR_USER_NOT_FOUND)){
         return null;
       }else {
@@ -345,8 +353,12 @@ class Model {
 
   Future<List<ProductInPromo>> getProductsInPromo(String id) async{
     try{
-      return List<ProductInPromo>.from(json.decode(await _restManager.makeGetRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_PROMOS + id + Constants.REQUEST_PRODUCT)).map((i) => ProductInPromoInCart.fromJson(i)).toList());
+      var response = await _restManager.makeGetRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_PROMOS + id + Constants.REQUEST_PRODUCT);
+      print(response);
+      return List<ProductInPromo>.from(json.decode(await _restManager.makeGetRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_PROMOS + id + Constants.REQUEST_PRODUCT)).map((i) => ProductInPromo.fromJson(i)).toList());
     }catch(e) {
+      print("errore");
+      print(e);
       return null;
     }
   }
