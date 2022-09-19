@@ -79,72 +79,52 @@ class _ProductInPromoPageState extends State<ProductInPromoPage>{
                 ),
                 textAlign: TextAlign.center,
               ),
-              Row(
+
+              Text(
+                widget.productInPromo.discountPrice.toString() + "€",
+                style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontSize: 30
+                ),
+                textAlign: TextAlign.center,
+              ),
+              Text(
+                "Quantity = " + widget.productInPromo.product.quantity.toString(),
+                style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontSize: 15
+                ),
+                textAlign: TextAlign.center,
+              ),
+              Text(
+                "Shipping = " + widget.productInPromo.product.shippingPrice.toString(),
+                style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontSize: 15
+                ),
+                textAlign: TextAlign.center,
+              ),
+              Expanded(child:Column(
                 children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Column(
-                      children: [
-                        Text(
-                          widget.productInPromo.discountPrice.toString(),
-                          style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 30
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                        Text(
-                          widget.productInPromo.product.quantity.toString(),
-                          style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 15
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
+                  Flexible(
+                    child: InputField(
+                      labelText: "Quantity to buy",
+                      controller: _quantityController,
                     ),
                   ),
-                  Column(
-                    children: [
-                      Flexible(
-                        child: InputField(
-                          labelText: "Quantity to buy",
-                          controller: _quantityController,
-                          onSubmit: () {
-                            _addToCart(widget.productInPromo.id.toString(), widget.productInPromo.promo.id.toString(), int.parse(_quantityController.text));
-                          },
-                        ),
-                      ),
-                      CircularIconButton(
-                          icon: Icons.add_shopping_cart,
-                          onPressed: () {
-                            _addToCart(widget.productInPromo.id.toString(), widget.productInPromo.promo.id.toString(), int.parse(_quantityController.text));
-                          }
-                      )
-                    ],
-                  )
+                  CircularIconButton(
+                      icon: Icons.add_shopping_cart,
+                      onPressed: () {
+                        _addToCart(widget.productInPromo.id.toString(), widget.productInPromo.promo.id.toString(), int.parse(_quantityController.text));
+                      })
                 ],
+              )
               ),
               Align(
                 alignment: Alignment.center,
-                child: Row(
-                  children: [
-                    Text(
-                      widget.productInPromo.product.freeShipping ? "Yes" : Text(
-                        widget.productInPromo.product.shippingPrice.toString(),
-                        style: TextStyle(
-                            color: Theme.of(context).primaryColor,
-                            fontSize: 30
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 30
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    RatingBarIndicator(
+                child: SizedBox(
+                  height: 40,
+                    child: RatingBarIndicator(
                       rating: widget.productInPromo.product.score,
                       itemBuilder: (context,index) => Icon(
                         Icons.star,
@@ -154,7 +134,6 @@ class _ProductInPromoPageState extends State<ProductInPromoPage>{
                       itemSize: 50.0,
                       direction: Axis.horizontal,
                     ),
-                  ],
                 ),
               ),
               Text(
@@ -173,7 +152,7 @@ class _ProductInPromoPageState extends State<ProductInPromoPage>{
                 ),
                 textAlign: TextAlign.center,
               ),
-              Column(
+              Expanded(child:Column(
                 children: [
                   Text(
                     "Reviews",
@@ -199,6 +178,7 @@ class _ProductInPromoPageState extends State<ProductInPromoPage>{
                     ),
                   ),
                 ],
+              )
               )
             ],
           ),

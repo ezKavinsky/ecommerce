@@ -151,6 +151,7 @@ class _UserRegistrationState extends State<UserRegistration> {
       setState(() {
         _adding = false;
         _user = result;
+        Navigator.push(context, new MaterialPageRoute(builder: (context) => new Account(user: _user)));
       });
     });
   }

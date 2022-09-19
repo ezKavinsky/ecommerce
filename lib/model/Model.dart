@@ -192,14 +192,16 @@ class Model {
   Future<User> addUser(User user) async {
     try {
       String rawResult = await _restManager.makePostRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_ADD_USER, user);
+      print ("rawResult " + rawResult);
       if ( rawResult.contains(Constants.RESPONSE_ERROR_MAIL_USER_ALREADY_EXISTS) ) {
-        return null; // not the best solution
+        return null;// not the best solution
       }
       else {
         return User.fromJson(jsonDecode(rawResult));
       }
     }
     catch (e) {
+      print("Ciao");
       return null; // not the best solution
     }
   }
@@ -259,11 +261,12 @@ class Model {
       String rawResult = await _restManager.makeGetRequestParam(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_USER_BY_EMAIL, params);
       print(rawResult);
       if(rawResult.contains(Constants.RESPONSE_ERROR_USER_NOT_FOUND)){
-        return null;
+        print ("Ciao");
       }else {
         return User.fromJson(jsonDecode(rawResult));
       }
     }catch(e){
+      print ("Ciao2");
       return null;
     }
   }
