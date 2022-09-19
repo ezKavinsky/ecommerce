@@ -258,11 +258,14 @@ class Model {
     Map<String, String> params = Map();
     params["email"] = email;
     try{
+      print("Test");
       String rawResult = await _restManager.makeGetRequestParam(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_USER_BY_EMAIL, params);
-      print(rawResult);
+      print("rawResult = " + rawResult);
       if(rawResult.contains(Constants.RESPONSE_ERROR_USER_NOT_FOUND)){
         print ("Ciao");
+        return null;
       }else {
+        print("Zamy");
         return User.fromJson(jsonDecode(rawResult));
       }
     }catch(e){

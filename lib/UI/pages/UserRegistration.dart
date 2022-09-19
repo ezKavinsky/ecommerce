@@ -157,7 +157,9 @@ class _UserRegistrationState extends State<UserRegistration> {
   }
 
   void _login(String email){
+    print("Login");
     Model.sharedInstance.getByEmail(email).then((result) {
+      print(result);
       _user = result;
       setState((){
         Navigator.push(context, new MaterialPageRoute(builder: (context) => new Account(user: _user)));

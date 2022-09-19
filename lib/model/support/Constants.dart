@@ -24,7 +24,7 @@ class Constants {
   static final String REQUEST_CLEAR_CART = "/cart/clear/";
   static final String REQUEST_PRODUCTS_IN_CART= "/cart/products/";
   static final String REQUEST_PRODUCTS_IN_PROMO_IN_CART= "/cart/productsInPromo/";
-  static final String REQUEST_USER_BY_EMAIL=" /users/getByEmail/";
+  static final String REQUEST_USER_BY_EMAIL="/users/getByEmail";
   static final String REQUEST_PURCHASES = "/purchases/";
   static final String REQUEST_UPDATE_COMMENT = "/updateComment/";
 
