@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 
+import '../../model/Model.dart';
 import '../../model/objects/Purchase.dart';
+import '../../model/objects/User.dart';
 import '../widgets/PurchaseCard.dart';
 import 'PurchasePage.dart';
 
 class PurchasesPage extends StatefulWidget{
-  PurchasesPage({Key key, this.purchases}) : super (key : key);
+  PurchasesPage({Key key, this.purchases, this.user}) : super (key : key);
   final List<Purchase> purchases;
+  final User user;
 
   @override
   _PurchasesPageState createState() => _PurchasesPageState();
@@ -15,11 +18,23 @@ class PurchasesPage extends StatefulWidget{
 
 class _PurchasesPageState extends State<PurchasesPage> {
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: SingleChildScrollView(
-            child: Center(
+           child: widget.purchases == null ?
+            Align(
+              alignment: Alignment.center,
+              child: Text(
+              "Nessun Acquisto!",
+              style: TextStyle(
+                fontSize: 50,
+                color: Theme.of(context).primaryColor,
+              ),
+              )
+            ) :
+            Center(
                 child : Column(
                     children: [
                       Padding(
@@ -59,7 +74,7 @@ class _PurchasesPageState extends State<PurchasesPage> {
 
   void _getPurchase(Purchase purchase){
     setState((){
-      Navigator.push(context, new MaterialPageRoute(builder: (context) => new PurchasePage(purchase: purchase)));
+      Navigator.push(context, new MaterialPageRoute(builder: (context) => new PurchasePage(purchase: purchase, user: widget.user)));
     });
 
   }

@@ -1,4 +1,5 @@
 import 'package:ecommerce/UI/widgets/ProductInPurchaseCard.dart';
+import 'package:ecommerce/model/objects/User.dart';
 import 'package:flutter/material.dart';
 import '../../model/objects/Product.dart';
 import '../../model/objects/ProductInPromo.dart';
@@ -9,8 +10,9 @@ import 'ProductInPromoPage.dart';
 import 'ProductPage.dart';
 
 class PurchasePage extends StatefulWidget{
-  PurchasePage({Key key, this.purchase}) : super (key : key);
+  PurchasePage({Key key, this.purchase, this.user}) : super (key : key);
   final Purchase purchase;
+  final User user;
 
   @override
   _PurchasePageState createState() => _PurchasePageState();

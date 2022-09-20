@@ -1,4 +1,5 @@
 import 'package:ecommerce/model/Model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../model/objects/Cart.dart';
 import '../../model/objects/Purchase.dart';
@@ -21,139 +22,145 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
-  bool _editable;
+  bool _editable = false;
   List<Purchase> _purchases = null;
   List<Review> _reviews = null;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Align(
-              alignment: Alignment.bottomLeft,
-              child: ElevatedButton(
-                  child: Icon(Icons.edit),
-                  onPressed: () {
-                    _modify();
-                  }
+      body: Padding(
+        padding: EdgeInsets.fromLTRB(0, 10, 10, 0),
+        child: Column(
+          children: [
+            Align(
+                alignment: Alignment.bottomLeft,
+                child: ElevatedButton(
+                    child: Icon(Icons.edit),
+                    onPressed: () {
+                      _modify();
+                    }
+                )
+            ),
+            Align(
+                alignment: Alignment.bottomRight,
+                child: ElevatedButton(
+                    child: Icon(Icons.shopify_sharp),
+                    onPressed: () {
+                      _getPurchases(widget.user.id.toString());
+                    }
+                )
+            ),
+            Align(
+                alignment: Alignment.bottomCenter,
+                child: ElevatedButton(
+                    child: Icon(Icons.reviews),
+                    onPressed: () {
+                      _getReviews(widget.user.id.toString());
+                    }
+                )
+            ),Container(
+              padding: EdgeInsets.fromLTRB(50, 0, 50, 50),
+                child: Column(
+                  children: [
+                    TextField(
+                      enabled: _editable,
+                      decoration: InputDecoration(
+                        labelText: widget.user.firstName,
+                      ),
+                      onEditingComplete: () {
+                        _updateFirstName(widget.user.id.toString(), widget.user.firstName);
+                      },
+                      style: TextStyle(
+                        fontSize: 30,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                    TextField(
+                      enabled: _editable,
+                      decoration: InputDecoration(
+                        labelText: widget.user.lastName,
+                      ),
+                      onEditingComplete: () {
+                        _updateLastName(widget.user.id.toString(), widget.user.lastName);
+                      },
+                      style: TextStyle(
+                        fontSize: 30,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                  TextField(
+                    enabled: _editable,
+                    decoration: InputDecoration(
+                      labelText: widget.user.code,
+                    ),
+                    onEditingComplete: () {
+                      _updateCode(widget.user.id.toString(), widget.user.code);
+                    },
+                    style: TextStyle(
+                      fontSize: 30,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+        TextField(
+          enabled: _editable,
+          decoration: InputDecoration(
+            labelText: widget.user.telephoneNumber,
+          ),
+          onEditingComplete: () {
+            _updateTelephoneNumber(widget.user.id.toString(), widget.user.telephoneNumber);
+          },
+          style: TextStyle(
+            fontSize: 30,
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+        TextField(
+          enabled: _editable,
+          decoration: InputDecoration(
+            labelText: widget.user.email,
+          ),
+          onEditingComplete: () {
+            _updateEmail(widget.user.id.toString(), widget.user.email);
+          },
+          style: TextStyle(
+            fontSize: 30,
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+        TextField(
+          enabled: _editable,
+          decoration: InputDecoration(
+            labelText: widget.user.address,
+          ),
+          onEditingComplete: () {
+            _updateAddress(widget.user.id.toString(), widget.user.address);
+          },
+          style: TextStyle(
+            fontSize: 30,
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+                    TextField(
+                      enabled: _editable,
+                      decoration: InputDecoration(
+                        labelText: widget.user.birthDate.toString(),
+                      ),
+                      onEditingComplete: () {
+                        _updateAddress(widget.user.id.toString(), widget.user.birthDate);
+                      },
+                      style: TextStyle(
+                        fontSize: 30,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+
+                  ],
+                ),
               )
-          ),
-          Align(
-              alignment: Alignment.bottomRight,
-              child: ElevatedButton(
-                  child: Icon(Icons.shopify_sharp),
-                  onPressed: () {
-                    _getPurchases(widget.user.id.toString());
-                  }
-              )
-          ),
-          Align(
-              alignment: Alignment.bottomCenter,
-              child: ElevatedButton(
-                  child: Icon(Icons.reviews),
-                  onPressed: () {
-                    _getReviews(widget.user.id.toString());
-                  }
-              )
-          ),
-          Row(
-            children: [
-              TextField(
-                enabled: _editable,
-                decoration: InputDecoration(
-                  labelText: widget.user.firstName,
-                ),
-                onEditingComplete: () {
-                  _updateFirstName(widget.user.id.toString(), widget.user.firstName);
-                },
-                style: TextStyle(
-                  fontSize: 30,
-                  color: Theme.of(context).primaryColor,
-                ),
-              ),
-              TextField(
-                enabled: _editable,
-                decoration: InputDecoration(
-                  labelText: widget.user.lastName,
-                ),
-                onEditingComplete: () {
-                  _updateLastName(widget.user.id.toString(), widget.user.lastName);
-                },
-                style: TextStyle(
-                  fontSize: 30,
-                  color: Theme.of(context).primaryColor,
-                ),
-              )
-            ],
-          ),
-          Center(
-            child: TextField(
-              enabled: _editable,
-              decoration: InputDecoration(
-                labelText: widget.user.code,
-              ),
-              onEditingComplete: () {
-                _updateCode(widget.user.id.toString(), widget.user.code);
-              },
-              style: TextStyle(
-                fontSize: 30,
-                color: Theme.of(context).primaryColor,
-              ),
-            )
-          ),
-          Row(
-            children: [
-              TextField(
-                enabled: _editable,
-                decoration: InputDecoration(
-                  labelText: widget.user.telephoneNumber,
-                ),
-                onEditingComplete: () {
-                  _updateTelephoneNumber(widget.user.id.toString(), widget.user.telephoneNumber);
-                },
-                style: TextStyle(
-                  fontSize: 30,
-                  color: Theme.of(context).primaryColor,
-                ),
-              ),
-              TextField(
-                enabled: _editable,
-                decoration: InputDecoration(
-                  labelText: widget.user.email,
-                ),
-                onEditingComplete: () {
-                  _updateEmail(widget.user.id.toString(), widget.user.email);
-                },
-                style: TextStyle(
-                  fontSize: 30,
-                  color: Theme.of(context).primaryColor,
-                ),
-              ),
-              Text(
-                widget.user.birthDate.toString(),
-                style: TextStyle(
-                  fontSize: 30,
-                  color: Theme.of(context).primaryColor,
-                ),
-              ),
-              TextField(
-                enabled: _editable,
-                decoration: InputDecoration(
-                  labelText: widget.user.address,
-                ),
-                onEditingComplete: () {
-                  _updateAddress(widget.user.id.toString(), widget.user.address);
-                },
-                style: TextStyle(
-                  fontSize: 30,
-                  color: Theme.of(context).primaryColor,
-                ),
-              )
-            ],
-          ),
-        ],
-      ),
+        ]
+      )
+      )
     );
   }
 
@@ -171,6 +178,7 @@ class _AccountState extends State<Account> {
     Model.sharedInstance.updateFirstName(id, firstName).then((result){
       setState(() {
         _editable = !_editable;
+
       });
     });
   }
@@ -220,7 +228,7 @@ class _AccountState extends State<Account> {
       _purchases = result;
     });
     setState((){
-      Navigator.push(context, new MaterialPageRoute(builder: (context) => new PurchasesPage(purchases: _purchases)));
+      Navigator.push(context, new MaterialPageRoute(builder: (context) => new PurchasesPage(purchases: _purchases, user: widget.user)));
     });
   }
 
