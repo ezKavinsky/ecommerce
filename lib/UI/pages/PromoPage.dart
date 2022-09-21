@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import '../../model/Model.dart';
 import '../../model/objects/ProductInPromo.dart';
 import '../../model/objects/Promo.dart';
+import '../../model/objects/User.dart';
 import '../widgets/CircularIconButton.dart';
 import '../widgets/ProductInPromoCard.dart';
 
 import 'ProductInPromoPage.dart';
 
 class PromoPage extends StatefulWidget{
-  PromoPage({Key key, this.promo}) : super (key : key);
+  PromoPage({Key key, this.promo, this.user}) : super (key : key);
   final Promo promo;
+  final User user;
 
   @override
   _PromoPageState createState() => _PromoPageState();
@@ -129,8 +131,7 @@ class _PromoPageState extends State<PromoPage> {
   void _getProductInPromo(ProductInPromo productInPromo) {
     setState(() {
       Navigator.push(context, new MaterialPageRoute(
-          builder: (context) => new ProductInPromoPage(
-              productInPromo: productInPromo)));
+          builder: (context) => new ProductInPromoPage(productInPromo: productInPromo, user: widget.user)));
     });
   }
 

@@ -6,6 +6,8 @@ import 'package:ecommerce/UI/pages/Promoting.dart';
 import 'package:ecommerce/UI/pages/UserRegistration.dart';
 import 'package:flutter/material.dart';
 
+import '../../model/objects/User.dart';
+
 
 class Layout extends StatefulWidget {
   final String title;
@@ -19,6 +21,7 @@ class Layout extends StatefulWidget {
 
 class _LayoutState extends State<Layout> {
   String title;
+  User user = null;
 
 
   _LayoutState(String title) {
@@ -29,7 +32,7 @@ class _LayoutState extends State<Layout> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 4,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
           shape: RoundedRectangleBorder(
@@ -40,19 +43,17 @@ class _LayoutState extends State<Layout> {
           title: Text(title),
           bottom: TabBar(
             tabs: [
-              Tab(text: AppLocalizations.of(context).translate("home").capitalize, icon: Icon(Icons.home_rounded)),
+              Tab(text: AppLocalizations.of(context).translate("user").capitalize, icon: Icon(Icons.person_rounded)),
               Tab(text: AppLocalizations.of(context).translate("search").capitalize, icon: Icon(Icons.search_rounded)),
               Tab(text: "Promo", icon: Icon(Icons.newspaper)),
-              Tab(text: AppLocalizations.of(context).translate("user").capitalize, icon: Icon(Icons.person_rounded)),
             ],
           ),
         ),
         body: TabBarView(
           children: [
-            Home(),
-            Search(),
-            Promoting(),
             UserRegistration(),
+            Search(user: user),
+            Promoting(user: user),
           ],
         ),
       ),

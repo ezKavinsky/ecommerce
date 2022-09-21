@@ -2,6 +2,7 @@ import 'package:ecommerce/UI/widgets/CircularIconButton.dart';
 import 'package:ecommerce/UI/widgets/InputField.dart';
 import 'package:ecommerce/UI/widgets/ReviewCard.dart';
 import 'package:ecommerce/model/Model.dart';
+import 'package:ecommerce/model/objects/User.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../../model/objects/Cart.dart';
@@ -13,8 +14,9 @@ import 'CartPage.dart';
 import 'ReviewPage.dart';
 
 class ProductInPromoPage extends StatefulWidget{
-  ProductInPromoPage({Key key, this.productInPromo}) : super (key : key);
+  ProductInPromoPage({Key key, this.productInPromo, this.user}) : super (key : key);
   final ProductInPromo productInPromo;
+  final User user;
 
   @override
   _ProductInPromoPageState createState() => _ProductInPromoPageState();
@@ -115,6 +117,14 @@ class _ProductInPromoPageState extends State<ProductInPromoPage>{
                   CircularIconButton(
                       icon: Icons.add_shopping_cart,
                       onPressed: () {
+                        widget.user == null ?
+                      Text(
+                        "Devi prima effettuare il login!",
+                        style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 15
+                        ),
+                      ) :
                         _addToCart(widget.productInPromo.id.toString(), widget.productInPromo.promo.id.toString(), int.parse(_quantityController.text));
                       })
                 ],
@@ -188,12 +198,9 @@ class _ProductInPromoPageState extends State<ProductInPromoPage>{
   }
 
   void _addToCart(String id1, String id2, int quantity){
-    Account user = Account();
-    _cart = user.getUser().cart;
-    Model.sharedInstance.addProductInPromoToCart(id1, id2, _cart.id.toString(), quantity).then((result) {
-      setState((){
-        Navigator.push(context, new MaterialPageRoute(builder: (context) => new CartPage(cart : _cart)));
-      });
+    Cart cart = widget.user.cart;
+    Model.sharedInstance.addProductInPromoToCart(id1, id2, cart.id.toString(), quantity).then((result) {
+      setState((){});
     });
   }
 
@@ -201,7 +208,7 @@ class _ProductInPromoPageState extends State<ProductInPromoPage>{
     Model.sharedInstance.getReview(id1, id2).then((result) {
       _review = result;
       setState((){
-        Navigator.push(context, new MaterialPageRoute(builder: (context) => new ReviewPage(review : _review)));
+        Navigator.push(context, new MaterialPageRoute(builder: (context) => new ReviewPage(review : _review, user: widget.user)));
       });
     });
   }

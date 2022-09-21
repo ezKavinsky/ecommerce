@@ -1,3 +1,4 @@
+import 'package:ecommerce/model/objects/Cart.dart';
 import 'package:ecommerce/model/support/extensions/StringCapitalization.dart';
 import 'package:ecommerce/UI/behaviors/AppLocalizations.dart';
 import 'package:ecommerce/UI/pages/Home.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/material.dart';
 
 import '../../model/objects/User.dart';
 import 'Account.dart';
+import 'CartPage.dart';
 
 
 class LoggedLayout extends StatefulWidget {
@@ -46,19 +48,19 @@ class _LoggedLayoutState extends State<LoggedLayout> {
           title: Text(title),
           bottom: TabBar(
             tabs: [
-              Tab(text: AppLocalizations.of(context).translate("home").capitalize, icon: Icon(Icons.home_rounded)),
+              Tab(text: AppLocalizations.of(context).translate("user").capitalize, icon: Icon(Icons.person_rounded)),
               Tab(text: AppLocalizations.of(context).translate("search").capitalize, icon: Icon(Icons.search_rounded)),
               Tab(text: "Promo", icon: Icon(Icons.newspaper)),
-              Tab(text: AppLocalizations.of(context).translate("user").capitalize, icon: Icon(Icons.person_rounded)),
+              Tab(text: "Cart", icon: Icon(Icons.shopping_cart))
             ],
           ),
         ),
         body: TabBarView(
           children: [
-            Home(),
-            Search(),
-            Promoting(),
             Account(user: user),
+            Search(user: user),
+            Promoting(user: user),
+            CartPage(cart: user.cart, user: user),
           ],
         ),
       ),

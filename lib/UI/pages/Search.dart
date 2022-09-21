@@ -5,13 +5,14 @@ import 'package:ecommerce/UI/widgets/InputField.dart';
 import 'package:ecommerce/UI/widgets/ProductCard.dart';
 import 'package:ecommerce/model/Model.dart';
 import 'package:ecommerce/model/objects/Product.dart';
+import 'package:ecommerce/model/objects/User.dart';
 import 'package:ecommerce/model/support/extensions/StringCapitalization.dart';
 import 'package:flutter/material.dart';
 
 
 class Search extends StatefulWidget {
-  Search({Key key}) : super(key: key);
-
+  Search({Key key, this.user}) : super(key: key);
+  final User user;
 
   @override
   _SearchState createState() => _SearchState();
@@ -117,7 +118,7 @@ class _SearchState extends State<Search> {
 
   void _getProduct(Product product) {
     setState(() {
-      Navigator.push(context, new MaterialPageRoute(builder: (context) => new ProductPage(product: product)));
+      Navigator.push(context, new MaterialPageRoute(builder: (context) => new ProductPage(product: product, user: widget.user)));
     });
   }
 }

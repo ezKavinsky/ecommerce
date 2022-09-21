@@ -2,6 +2,7 @@ import 'package:ecommerce/UI/widgets/CircularIconButton.dart';
 import 'package:ecommerce/UI/widgets/InputField.dart';
 import 'package:ecommerce/UI/widgets/ReviewCard.dart';
 import 'package:ecommerce/model/Model.dart';
+import 'package:ecommerce/model/objects/User.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../../model/objects/Cart.dart';
@@ -12,8 +13,9 @@ import 'CartPage.dart';
 import 'ReviewPage.dart';
 
 class ProductPage extends StatefulWidget{
-  ProductPage({Key key, this.product}) : super (key : key);
+  ProductPage({Key key, this.product, this.user}) : super (key : key);
   final Product product;
+  final User user;
 
   @override
   _ProductPageState createState() => _ProductPageState();
@@ -23,7 +25,6 @@ class ProductPage extends StatefulWidget{
 class _ProductPageState extends State<ProductPage>{
   TextEditingController _quantityController = TextEditingController();
   List<Review> _reviews = null;
-  Cart _cart = null;
   Review _review = null;
 
   @override
@@ -95,7 +96,23 @@ class _ProductPageState extends State<ProductPage>{
                 textAlign: TextAlign.center,
               ),
               Text(
-                "Shipping = " + widget.product.shippingPrice.toString(),
+                "Shipping = " + widget.product.shippingPrice.toString() + "€",
+                style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontSize: 15
+                ),
+                textAlign: TextAlign.center,
+              ),
+              Text(
+                widget.product.productionYear.toString(),
+                style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontSize: 15
+                ),
+                textAlign: TextAlign.center,
+              ),
+              Text(
+                widget.product.description,
                 style: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontSize: 15
@@ -113,7 +130,15 @@ class _ProductPageState extends State<ProductPage>{
                         CircularIconButton(
                           icon: Icons.add_shopping_cart,
                           onPressed: () {
-                            _addToCart(widget.product.id.toString(), int.parse(_quantityController.text));
+                            widget.user == null ?
+                            Text(
+                              "Devi prima effettuare il login!",
+                              style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontSize: 15
+                              ),
+                            ) :
+                            _addToCart(widget.product.id.toString(), _quantityController.text);
                           }
                         )
                       ],
@@ -137,23 +162,6 @@ class _ProductPageState extends State<ProductPage>{
                     )
 
                 ),
-              Text(
-                widget.product.productionYear.toString(),
-                style: TextStyle(
-                    color: Theme.of(context).primaryColor,
-                    fontSize: 15
-                ),
-                textAlign: TextAlign.center,
-              ),
-              Text(
-                widget.product.description,
-                style: TextStyle(
-                    color: Theme.of(context).primaryColor,
-                    fontSize: 15
-                ),
-                textAlign: TextAlign.center,
-              ),
-
               Expanded(child: Column(
                children: [
                  Text(
@@ -189,13 +197,10 @@ class _ProductPageState extends State<ProductPage>{
       );
   }
 
-  void _addToCart(String id, int quantity){
-    Account user = Account();
-    _cart = user.getUser().cart;
-    Model.sharedInstance.addProductToCart(id, _cart.id.toString(), quantity).then((result) {
-      setState((){
-        Navigator.push(context, new MaterialPageRoute(builder: (context) => new CartPage(cart : _cart)));
-      });
+  void _addToCart(String id, String quantity){
+    Cart cart = widget.user.cart;
+    Model.sharedInstance.addProductToCart(id, cart.id.toString(), quantity.toString()).then((result) {
+      setState((){});
     });
 
   }
@@ -204,7 +209,7 @@ class _ProductPageState extends State<ProductPage>{
     Model.sharedInstance.getReview(id1, id2).then((result) {
       _review = result;
       setState((){
-        Navigator.push(context, new MaterialPageRoute(builder: (context) => new ReviewPage(review : _review)));
+        Navigator.push(context, new MaterialPageRoute(builder: (context) => new ReviewPage(review : _review, user: widget.user)));
       });
     });
   }

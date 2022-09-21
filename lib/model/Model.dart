@@ -100,9 +100,13 @@ class Model {
     }
   }
 
-  Future<Cart> addProductToCart(String id, String idC, int quantity) async {
+  Future<Cart> addProductToCart(String id, String idC, String quantity) async {
+    Map<String,String> params = Map();
+    params["id"] = id;
+    params["quantity"] = quantity;
+    print(params);
     try{
-      return Cart.fromJson(json.decode(await _restManager.makePostRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_PRODUCT + id + Constants.REQUEST_ADD_PRODUCT_IN_CART, {idC, quantity} )));
+      return Cart.fromJson(json.decode(await _restManager.makePostRequestParam(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_PRODUCT + id + Constants.REQUEST_ADD_PRODUCT_IN_CART, params)));
     } catch(e){
       return null;
     }

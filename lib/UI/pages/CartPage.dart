@@ -8,6 +8,7 @@ import '../../model/objects/Cart.dart';
 import '../../model/objects/Product.dart';
 import '../../model/objects/ProductInPromo.dart';
 import '../../model/objects/ProductInPromoInCart.dart';
+import '../../model/objects/User.dart';
 import '../widgets/ProductInCartCard.dart';
 import '../widgets/ProductInPromoInCartCard.dart';
 import 'ProductInPromoPage.dart';
@@ -15,8 +16,9 @@ import 'ProductPage.dart';
 import 'PurchasePage.dart';
 
 class CartPage extends StatefulWidget{
-  CartPage({Key key, this.cart}) : super (key : key);
+  CartPage({Key key, this.cart, this.user}) : super (key : key);
   final Cart cart;
+  final User user;
 
   @override
   _CartPageState createState() => _CartPageState();
@@ -52,15 +54,6 @@ class _CartPageState extends State<CartPage>{
           padding: EdgeInsets.fromLTRB(0, 10, 10, 0),
           child: Column(
               children: [
-                Align(
-                  alignment: Alignment.topLeft,
-                  child:  CircularIconButton(
-                    icon: Icons.arrow_back,
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                ),
                 Text(
                   "Cart",
                   textAlign: TextAlign.left,
@@ -91,16 +84,12 @@ class _CartPageState extends State<CartPage>{
                                       ),
                                       onTap: () => _getProduct(_products[index].product),
                                     ),
-                                    Row(
-                                      children: [
                                         CircularIconButton(
                                           icon: Icons.remove_shopping_cart_outlined,
                                           onPressed: () {
                                             _removeProduct(widget.cart.id.toString(), _products[index].id.toString());
                                           },
                                         ),
-                                        Row(
-                                          children: [
                                             CircularIconButton(
                                               icon: Icons.add,
                                               onPressed: () {
@@ -120,10 +109,6 @@ class _CartPageState extends State<CartPage>{
                                               },
                                             ),
                                           ],
-                                        )
-                                      ],
-                                    )
-                                  ]
                               );
                             },
                           ),

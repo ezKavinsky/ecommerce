@@ -1,10 +1,13 @@
+import 'User.dart';
+
 class CreditCard {
   int id;
   String number;
   int expirationMonth;
   int expirationYear;
+  User owner;
 
-  CreditCard({this.id, this.number, this.expirationMonth, this.expirationYear});
+  CreditCard({this.id, this.number, this.expirationMonth, this.expirationYear, this.owner});
 
   factory CreditCard.fromJson(Map<String, dynamic> json) {
     return CreditCard(
@@ -12,6 +15,7 @@ class CreditCard {
         number: json['number'],
         expirationMonth: json['expirationMonth'],
         expirationYear: json['expirationYear'],
+        owner: User.fromJson(json['owner'])
     );
   }
 
@@ -20,6 +24,7 @@ class CreditCard {
     'number': number,
     'expirationMonth': expirationMonth,
     'expirationYear': expirationYear,
+    'owner': owner.toJson(),
   };
 
   @override

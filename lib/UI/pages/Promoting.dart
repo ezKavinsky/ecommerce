@@ -1,4 +1,5 @@
 import 'package:ecommerce/UI/widgets/CircularIconButton.dart';
+import 'package:ecommerce/model/objects/User.dart';
 import 'package:flutter/material.dart';
 import '../../model/Model.dart';
 import '../../model/objects/Promo.dart';
@@ -6,9 +7,8 @@ import '../widgets/PromoCard.dart';
 import 'PromoPage.dart';
 
 class Promoting extends StatefulWidget {
-  Promoting({Key key}) : super(key: key);
-
-
+  Promoting({Key key, this.user}) : super(key: key);
+  final User user;
   @override
   _PromotingState createState() => _PromotingState();
 }
@@ -65,7 +65,7 @@ class _PromotingState extends State<Promoting> {
 
   void _getPromo(Promo promo){
     setState((){
-      Navigator.push(context, new MaterialPageRoute(builder: (context) => new PromoPage(promo: promo)));
+      Navigator.push(context, new MaterialPageRoute(builder: (context) => new PromoPage(promo: promo, user: widget.user)));
     });
   }
 
