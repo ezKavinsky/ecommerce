@@ -54,6 +54,15 @@ class _CartPageState extends State<CartPage>{
           padding: EdgeInsets.fromLTRB(0, 10, 10, 0),
           child: Column(
               children: [
+                Align(
+                  alignment: Alignment.topLeft,
+                  child:  CircularIconButton(
+                    icon: Icons.arrow_back,
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ),
                 Text(
                   "Cart",
                   textAlign: TextAlign.left,
@@ -72,7 +81,14 @@ class _CartPageState extends State<CartPage>{
                       ),
                     ),
                 Expanded(
-                        child: _products.length <= 0 ? Text("Empty") : Container(
+                        child: _products.length <= 0 ?
+                        Text(
+                            "Nessun prodotto nel carrello",
+                          style: TextStyle(
+                            fontSize: 10,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ) : Container(
                           child: ListView.builder(
                             itemCount: _products.length,
                             itemBuilder: (context, index) {
@@ -84,6 +100,13 @@ class _CartPageState extends State<CartPage>{
                                       ),
                                       onTap: () => _getProduct(_products[index].product),
                                     ),
+                                        Text(
+                                          "Quantity in cart = " + _products[index].quantity.toString(),
+                                          style: TextStyle(
+                                          fontSize: 15,
+                                          color: Theme.of(context).primaryColor,
+                              )
+                                        ),
                                         CircularIconButton(
                                           icon: Icons.remove_shopping_cart_outlined,
                                           onPressed: () {
@@ -93,8 +116,7 @@ class _CartPageState extends State<CartPage>{
                                             CircularIconButton(
                                               icon: Icons.add,
                                               onPressed: () {
-                                                int quantity = int.parse(_quantityProductController.text);
-                                                _updateQuantityProduct(widget.cart.id.toString(), _products[index].id.toString(), quantity);
+                                                _updateQuantityProduct(widget.cart.id.toString(), _products[index].id.toString(), _quantityProductController.text);
                                               },
                                             ),
                                             InputField(
@@ -104,8 +126,7 @@ class _CartPageState extends State<CartPage>{
                                             CircularIconButton(
                                               icon: Icons.remove,
                                               onPressed: () {
-                                                int quantity = -int.parse(_quantityProductController.text);
-                                                _updateQuantityProduct(widget.cart.id.toString(), _products[index].id.toString(), quantity);
+                                                _updateQuantityProduct(widget.cart.id.toString(), _products[index].id.toString(), _quantityProductController.text);
                                               },
                                             ),
                                           ],
@@ -123,7 +144,14 @@ class _CartPageState extends State<CartPage>{
                       ),
                     ),
                 Expanded(
-                    child: _productsInPromo.length <= 0 ? Text("Empty") : Container(
+                    child: _productsInPromo.length <= 0 ?
+                    Text(
+                        "Nessun articolo in promozione nel carrello",
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ) : Container(
                       child: ListView.builder(
                         itemCount: _productsInPromo.length,
                         itemBuilder: (context, index) {
@@ -135,6 +163,13 @@ class _CartPageState extends State<CartPage>{
                                 ),
                                 onTap: () => _getProductInPromo(_productsInPromo[index].productInPromo),
                               ),
+                              Text(
+                                  "Quantity in cart = " + _products[index].quantity.toString(),
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: Theme.of(context).primaryColor,
+                                  )
+                              ),
                               CircularIconButton(
                                 icon: Icons.remove_shopping_cart_outlined,
                                 onPressed: () {
@@ -144,8 +179,7 @@ class _CartPageState extends State<CartPage>{
                               CircularIconButton(
                                 icon: Icons.add,
                                 onPressed: () {
-                                  int quantity = int.parse(_quantityProductInPromoController.text);
-                                  _updateQuantityProductInPromo(widget.cart.id.toString(), _productsInPromo[index].id.toString(), quantity);
+                                  _updateQuantityProductInPromo(widget.cart.id.toString(), _productsInPromo[index].id.toString(), _quantityProductInPromoController.text);
                                 },
                               ),
                               InputField(
@@ -155,8 +189,7 @@ class _CartPageState extends State<CartPage>{
                               CircularIconButton(
                                 icon: Icons.remove,
                                 onPressed: () {
-                                  int quantity = -int.parse(_quantityProductInPromoController.text);
-                                  _updateQuantityProductInPromo(widget.cart.id.toString(), _productsInPromo[index].id.toString(), quantity);
+                                  _updateQuantityProductInPromo(widget.cart.id.toString(), _productsInPromo[index].id.toString(), _quantityProductInPromoController.text);
                                 },
                               ),
                             ],
@@ -218,30 +251,56 @@ class _CartPageState extends State<CartPage>{
 
   void _clear(String id1){
     Model.sharedInstance.clearCart(id1).then((result) {
-      setState((){});
+      setState((){
+        Model.sharedInstance.getProducts(widget.cart.id.toString()).then((result) {
+          _products = result;
+        });
+        Model.sharedInstance.getProductsInPromoInCart(widget.cart.id.toString())
+            .then((result) {
+            _productsInPromo = result;
+        });
+      });
     });
   }
 
   void _removeProductInPromo(String id1, String id2) {
     Model.sharedInstance.removeProductInPromo(id1, id2).then((result) {
-      setState(() {});
+      setState(() {
+        Model.sharedInstance.getProducts(widget.cart.id.toString()).then((result) {
+          _products = result;
+        });
+      });
     });
   }
     void _removeProduct(String id1, String id2) {
       Model.sharedInstance.removeProduct(id1, id2).then((result) {
-        setState(() {});
+        setState(() {
+          Model.sharedInstance.getProductsInPromoInCart(widget.cart.id.toString())
+              .then((result) {
+            _productsInPromo = result;
+          });
+        });
       });
     }
 
-    void _updateQuantityProduct(String id1, String id2, int quantity){
+    void _updateQuantityProduct(String id1, String id2, String quantity){
     Model.sharedInstance.updateProductQuantity(id1, id2, quantity).then((result) {
-      setState((){});
+      setState((){
+        Model.sharedInstance.getProducts(widget.cart.id.toString()).then((result) {
+          _products = result;
+        });
+      });
     });
     }
 
-  void _updateQuantityProductInPromo(String id1, String id2, int quantity){
+  void _updateQuantityProductInPromo(String id1, String id2, String quantity){
     Model.sharedInstance.updateProductInPromoQuantity(id1, id2, quantity).then((result) {
-      setState((){});
+      setState((){
+        Model.sharedInstance.getProductsInPromoInCart(widget.cart.id.toString())
+            .then((result) {
+          _productsInPromo = result;
+        });
+      });
     });
   }
 

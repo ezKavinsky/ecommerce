@@ -116,17 +116,17 @@ class Model {
     }
   }
 
-  Future<Cart> updateProductQuantity(String id, String idC, int quantity) async {
+  Future<Cart> updateProductQuantity(String id, String idC, String quantity) async {
     try{
-      return Cart.fromJson(json.decode(await _restManager.makePutRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_PRODUCT + id + Constants.REQUEST_PRODUCT, {idC, quantity} )));
+      return Cart.fromJson(json.decode(await _restManager.makePutRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_PRODUCT + idC + Constants.REQUEST_PRODUCT, {"id" : id, "quantity" : quantity})));
     } catch(e){
       return null;
     }
   }
 
-  Future<Cart> updateProductInPromoQuantity(String id, String idC, int quantity) async {
+  Future<Cart> updateProductInPromoQuantity(String id, String idC, String quantity) async {
     try{
-      return Cart.fromJson(json.decode(await _restManager.makePutRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_PRODUCT + id + Constants.REQUEST_PRODUCTS_IN_PROMO, {idC, quantity} )));
+      return Cart.fromJson(json.decode(await _restManager.makePutRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_PRODUCT + idC + Constants.REQUEST_PRODUCTS_IN_PROMO, {"id" : id, "quantity" : quantity} )));
     } catch(e){
       return null;
     }
@@ -220,17 +220,17 @@ class Model {
     }
   }
 
-  Future<Cart> removeProduct(String id1, String id2) async{
+  Future removeProduct(String id1, String id2) async{
     try{
-      return Cart.fromJson(json.decode(await _restManager.makeDeleteRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_ADD_USER + id2 + Constants.REQUEST_PRODUCTS_IN_CART + id1)));
+      await _restManager.makeDeleteRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_ADD_USER + id1 + Constants.REQUEST_PRODUCTS_IN_CART + id2);
     }catch(e){
       return null;
     }
   }
 
-  Future<Cart> removeProductInPromo(String id1, String id2) async{
+  Future removeProductInPromo(String id1, String id2) async{
     try{
-      return Cart.fromJson(json.decode(await _restManager.makeDeleteRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_ADD_USER + id2 + Constants.REQUEST_PRODUCTS_IN_CART + id1)));
+      await _restManager.makeDeleteRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_ADD_USER + id1 + Constants.REQUEST_PRODUCTS_IN_PROMO_IN_CART + id2);
     }catch(e){
       return null;
     }
