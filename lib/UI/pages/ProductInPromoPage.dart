@@ -125,7 +125,7 @@ class _ProductInPromoPageState extends State<ProductInPromoPage>{
                             fontSize: 15
                         ),
                       ) :
-                        _addToCart(widget.productInPromo.id.toString(), widget.productInPromo.promo.id.toString(), int.parse(_quantityController.text));
+                        _addToCart(widget.productInPromo.id.toString(), widget.productInPromo.promo.id.toString(), _quantityController.text);
                       })
                 ],
               )
@@ -197,10 +197,12 @@ class _ProductInPromoPageState extends State<ProductInPromoPage>{
     );
   }
 
-  void _addToCart(String id1, String id2, int quantity){
+  void _addToCart(String id1, String id2, String quantity){
     Cart cart = widget.user.cart;
     Model.sharedInstance.addProductInPromoToCart(id1, id2, cart.id.toString(), quantity).then((result) {
-      setState((){});
+      setState((){
+        Navigator.push(context, new MaterialPageRoute(builder: (context) => new CartPage(cart : cart, user: widget.user)));
+      });
     });
   }
 

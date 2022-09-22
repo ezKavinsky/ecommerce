@@ -123,56 +123,48 @@ class _CartPageState extends State<CartPage>{
                       ),
                     ),
                 Expanded(
-                        child: _productsInPromo.length <= 0 ? Text("Empty") : Container(
-                          child: ListView.builder(
-                            itemCount: _productsInPromo.length,
-                            itemBuilder: (context, index) {
-                              return Column(
-                                children: [
+                    child: _productsInPromo.length <= 0 ? Text("Empty") : Container(
+                      child: ListView.builder(
+                        itemCount: _productsInPromo.length,
+                        itemBuilder: (context, index) {
+                          return Column(
+                            children: [
                               GestureDetector(
-                              child: ProductInPromoInCartCard(
-                              productInPromoInCart: _productsInPromo[index],
+                                child: ProductInPromoInCartCard(
+                                  productInPromoInCart: _productsInPromo[index],
+                                ),
+                                onTap: () => _getProductInPromo(_productsInPromo[index].productInPromo),
                               ),
-                              onTap: () => _getProductInPromo(_productsInPromo[index].productInPromo),
+                              CircularIconButton(
+                                icon: Icons.remove_shopping_cart_outlined,
+                                onPressed: () {
+                                  _removeProductInPromo(widget.cart.id.toString(), _productsInPromo[index].id.toString());
+                                },
                               ),
-                                  Row(
-                                    children: [
-                                      CircularIconButton(
-                                        icon: Icons.remove_shopping_cart_outlined,
-                                        onPressed: () {
-                                          _removeProductInPromo(widget.cart.id.toString(), _productsInPromo[index].id.toString());
-                                        },
-                                      ),
-                                      Row(
-                                        children: [
-                                          CircularIconButton(
-                                            icon: Icons.add,
-                                            onPressed: () {
-                                              int quantity = int.parse(_quantityProductInPromoController.text);
-                                              _updateQuantityProductInPromo(widget.cart.id.toString(), _productsInPromo[index].id.toString(), quantity);
-                                            },
-                                          ),
-                                          InputField(
-                                            labelText: "Quantity",
-                                            controller: _quantityProductInPromoController,
-                                          ),
-                                          CircularIconButton(
-                                            icon: Icons.remove,
-                                            onPressed: () {
-                                              int quantity = -int.parse(_quantityProductInPromoController.text);
-                                              _updateQuantityProduct(widget.cart.id.toString(), _productsInPromo[index].id.toString(), quantity);
-                                            },
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  )
-                                ]
-                              );
-                            },
-                          ),
-                        )
-                    ),
+                              CircularIconButton(
+                                icon: Icons.add,
+                                onPressed: () {
+                                  int quantity = int.parse(_quantityProductInPromoController.text);
+                                  _updateQuantityProductInPromo(widget.cart.id.toString(), _productsInPromo[index].id.toString(), quantity);
+                                },
+                              ),
+                              InputField(
+                                labelText: "Quantity",
+                                controller: _quantityProductInPromoController,
+                              ),
+                              CircularIconButton(
+                                icon: Icons.remove,
+                                onPressed: () {
+                                  int quantity = -int.parse(_quantityProductInPromoController.text);
+                                  _updateQuantityProductInPromo(widget.cart.id.toString(), _productsInPromo[index].id.toString(), quantity);
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                    )
+                ),
                 Row(
                   children: [
                     Align(
@@ -217,6 +209,7 @@ class _CartPageState extends State<CartPage>{
   void _makePurchase(String id1){
     Model.sharedInstance.addPurchase(id1).then((result) {
       _purchase = result;
+      print(result);
       setState((){
         Navigator.push(context, new MaterialPageRoute(builder: (context) => new PurchasePage(purchase : _purchase)));
       });

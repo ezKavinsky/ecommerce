@@ -200,7 +200,10 @@ class _ProductPageState extends State<ProductPage>{
   void _addToCart(String id, String quantity){
     Cart cart = widget.user.cart;
     Model.sharedInstance.addProductToCart(id, cart.id.toString(), quantity.toString()).then((result) {
-      setState((){});
+      setState((){
+        cart = result;
+        Navigator.push(context, new MaterialPageRoute(builder: (context) => new CartPage(cart : cart, user: widget.user)));
+      });
     });
 
   }

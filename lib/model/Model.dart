@@ -101,20 +101,16 @@ class Model {
   }
 
   Future<Cart> addProductToCart(String id, String idC, String quantity) async {
-    Map<String,String> params = Map();
-    params["id"] = id;
-    params["quantity"] = quantity;
-    print(params);
     try{
-      return Cart.fromJson(json.decode(await _restManager.makePostRequestParam(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_PRODUCT + id + Constants.REQUEST_ADD_PRODUCT_IN_CART, params)));
+      return Cart.fromJson(json.decode(await _restManager.makePostRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_PRODUCT + id + Constants.REQUEST_ADD_PRODUCT_IN_CART, {"id" : idC, "quantity" : quantity})));
     } catch(e){
       return null;
     }
   }
 
-  Future<Cart> addProductInPromoToCart(String id1, String id2, String idC, int quantity) async {
+  Future<Cart> addProductInPromoToCart(String id1, String id2, String idC, String quantity) async {
     try{
-      return Cart.fromJson(json.decode(await _restManager.makePostRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_PROMOS + id2 + Constants.REQUEST_PRODUCTS_IN_PROMO + id1, {idC, quantity} )));
+      return Cart.fromJson(json.decode(await _restManager.makePostRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_PROMOS + id2 + Constants.REQUEST_PRODUCTS_IN_PROMO + id1 + Constants.REQUEST_ADD_PRODUCT_IN_CART, {"id" : idC, "quantity" : quantity} )));
     } catch(e){
       return null;
     }
@@ -205,27 +201,13 @@ class Model {
     }
   }
 
-  Future<User> addUser(User user) async {
-    try {
-      String rawResult = await _restManager.makePostRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_ADD_USER, user);
-      print ("rawResult " + rawResult);
-      if ( rawResult.contains(Constants.RESPONSE_ERROR_MAIL_USER_ALREADY_EXISTS) ) {
-        return null;// not the best solution
-      }
-      else {
-        return User.fromJson(jsonDecode(rawResult));
-      }
-    }
-    catch (e) {
-      print("Ciao");
-      return null; // not the best solution
-    }
-  }
-
   Future<Purchase> addPurchase(String id1) async{
     try{
-      return Purchase.fromJson(json.decode(await _restManager.makePostRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_ADD_USER + id1 + Constants.REQUEST_ADD_PRODUCT_IN_CART, null)));
+      var response = Purchase.fromJson(json.decode(await _restManager.makePostRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_ADD_USER + id1 + Constants.REQUEST_MAKE_PURCHASE, null)));
+      print(response);
+      return response;
     }catch(e){
+      print(e);
       return null;
     }
   }
